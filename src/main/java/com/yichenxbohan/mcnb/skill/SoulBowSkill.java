@@ -1,6 +1,7 @@
 package com.yichenxbohan.mcnb.skill;
 
 import com.mojang.logging.LogUtils;
+import com.yichenxbohan.mcnb.combat.damage.DamageAPI;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.network.chat.Component;
@@ -323,24 +324,21 @@ public class SoulBowSkill {
                     // 只對怪物或敵對生物造成傷害
                     // 可以根據需要調整條件（例如只傷害怪物，或者也傷害其他玩家）
                     if (target instanceof Monster || (target instanceof Mob mob && mob.getTarget() != null)) {
-                        // 創建傷害源
-                        DamageSource damageSource;
-                        if (arrow.getOwner() instanceof LivingEntity owner) {
-                            damageSource = level.damageSources().arrow(arrow, owner);
-                        } else {
-                            damageSource = level.damageSources().arrow(arrow, arrow);
-                        }
-
                         // 造成傷害（使用設定的箭矢傷害值）
                         float damage = (float) arrowDamage;
-                        boolean damaged = target.hurt(damageSource, damage);
 
-                        // 如果成功造成傷害，播放音效
-                        if (damaged) {
-                            level.playSound(null, target.blockPosition(),
-                                    SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS,
-                                    0.5F, 1.0F);
+                        // 使用新的傷害系統造成時空傷害（無視防禦力）
+                        if (arrow.getOwner() instanceof LivingEntity owner) {
+                            DamageAPI.soul(owner, target, damage);
+                        } else {
+                            // 如果沒有發射者，直接使用原版傷害系統
+                            target.hurt(target.damageSources().arrow(arrow, arrow), damage);
                         }
+
+                        // 播放攻擊音效
+                        level.playSound(null, target.blockPosition(),
+                                SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS,
+                                0.5F, 1.0F);
                     }
                 }
             });

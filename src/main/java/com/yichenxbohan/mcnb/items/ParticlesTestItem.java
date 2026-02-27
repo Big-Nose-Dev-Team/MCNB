@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ParticlesTestItem extends Item {
 
-    private static final ParticleEmitterInfo HERALD = new ParticleEmitterInfo(new ResourceLocation("mcnb", "arrow_1"));
+    private static final ParticleEmitterInfo HERALD = new ParticleEmitterInfo(ResourceLocation.fromNamespaceAndPath("mcnb", "skybreaking"));
 
     // 设置最大射线距离（你可以调整这个值）
     private static final double MAX_REACH_DISTANCE = 200.0;
@@ -47,12 +47,25 @@ public class ParticlesTestItem extends Item {
 
             // 只在服务端执行
             if (!level.isClientSide) {
-                // 在方块上方生成粒子效果
-                AAALevel.addParticle(level, false, HERALD.clone().position(
-                        blockPos.getX() + 0.5d,
-                        blockPos.getY() + 1.0d,
-                        blockPos.getZ() + 0.5d
-                ));
+                // 獲取玩家的旋轉角度
+                float yaw = player.getYRot();     // 水平旋轉（左右看）
+                float pitch = player.getXRot();   // 垂直旋轉（上下看）
+
+                // 將 Minecraft 的角度轉換為弧度
+                // 注意：Minecraft 的 yaw 0 是朝南，需要調整讓粒子朝向玩家面對的方向
+                float rotationY = (float) Math.toRadians(-yaw);      // Y軸旋轉（水平）
+                float rotationX = (float) Math.toRadians(-pitch);    // X軸旋轉（俯仰）
+                float rotationZ = 0.0f;                               // Z軸旋轉（翻滾）
+
+                // 在方块上方生成粒子效果，並設置旋轉
+                AAALevel.addParticle(level, true, HERALD.clone()
+                        .position(
+                                blockPos.getX() + 0.5d,
+                                blockPos.getY() + 128.0d,
+                                blockPos.getZ() + 0.5d
+                        )
+                        .rotation(0, rotationY+80, rotationZ)
+                );
 
                 // 给玩家发送消息（可选）
 //                player.sendSystemMessage(

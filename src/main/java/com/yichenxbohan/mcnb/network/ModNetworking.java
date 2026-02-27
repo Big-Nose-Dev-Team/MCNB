@@ -25,10 +25,18 @@ public class ModNetworking {
     }
 
     public static void register() {
+        // 客戶端 -> 服務端
         INSTANCE.messageBuilder(SoulBowPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(SoulBowPacket::new)
                 .encoder(SoulBowPacket::toBytes)
                 .consumerMainThread(SoulBowPacket::handle)
+                .add();
+
+        // 服務端 -> 客戶端：傷害數字
+        INSTANCE.messageBuilder(DamageNumberPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(DamageNumberPacket::new)
+                .encoder(DamageNumberPacket::toBytes)
+                .consumerMainThread(DamageNumberPacket::handle)
                 .add();
     }
 
@@ -39,5 +47,20 @@ public class ModNetworking {
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
-}
 
+    /**
+     * 發送訊息給所有追蹤某位置的玩家
+     */
+    public static <MSG> void sendToAllTracking(MSG message, net.minecraft.world.entity.Entity entity) {
+        INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), message);
+    }
+
+    /**
+     * 發送訊息給指定範圍內的所有玩家
+     */
+    public static <MSG> void sendToNearby(MSG message, net.minecraft.server.level.ServerLevel level,
+                                           double x, double y, double z, double radius) {
+        INSTANCE.send(PacketDistributor.NEAR.with(() ->
+            new PacketDistributor.TargetPoint(x, y, z, radius, level.dimension())), message);
+    }
+}
