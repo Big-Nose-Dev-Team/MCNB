@@ -50,26 +50,8 @@ public class CombatStats {
 
     // ==================== 防禦屬性 ====================
 
-    /** 物理防禦力 */
+    /** 統一防禦力（取代各種元素抗性） */
     public double defense;
-
-    /** 魔法抗性 */
-    public double magicResistance;
-
-    /** 能量抗性 */
-    public double energyResistance;
-
-    /** 靈魂抗性 */
-    public double soulResistance;
-
-    /** 混沌抗性 */
-    public double chaosResistance;
-
-    /** 空間抗性 */
-    public double spatialResistance;
-
-    /** 時空抗性 */
-    public double temporalResistance;
 
     /** 傷害減免 (0.0 - 1.0，上限通常為 0.8) */
     public double damageReduction;
@@ -97,16 +79,10 @@ public class CombatStats {
      * 根據傷害類型獲取對應的抗性值
      */
     public double getResistanceFor(com.yichenxbohan.mcnb.combat.damage.DamageTypeEx type) {
-        return switch (type) {
-            case PHYSICAL -> defense;
-            case MAGIC -> magicResistance;
-            case ENERGY -> energyResistance;
-            case SOUL -> soulResistance;
-            case CHAOS -> chaosResistance;
-            case SPATIAL -> spatialResistance;
-            case TEMPORAL -> temporalResistance;
-            case TRUE -> 0; // 真實傷害無視所有抗性
-        };
+        if (type == com.yichenxbohan.mcnb.combat.damage.DamageTypeEx.TRUE) {
+            return 0; // 真實傷害無視所有抗性
+        }
+        return defense;
     }
 
     /**

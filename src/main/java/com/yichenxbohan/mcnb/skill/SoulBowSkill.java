@@ -240,8 +240,10 @@ public class SoulBowSkill {
                     double z = playerPos.z + Math.sin(angle) * radius;
 
                     level.getServer().execute(() ->
+                            // 設置粒子旋轉，對齊玩家朝向
                             AAALevel.addParticle(level, true,
-                                    SOUL_BOW.clone().position(x, y, z))
+                                    SOUL_BOW.clone().position(x, y, z)
+                                            .rotation((float)Math.toRadians(player.getXRot()), (float)Math.toRadians(player.getYRot()), 0f))
                     );
 
                     Thread.sleep(25);
@@ -295,9 +297,9 @@ public class SoulBowSkill {
                 // 箭矢仍在飛行中，持續生成粒子
                 Vec3 p = arrow.position();
                 AAALevel.addParticle(level, true,
-                        SOUL_BOW.clone().position(p.x, p.y, p.z));
+                        SOUL_BOW.clone().position(p.x, p.y, p.z).rotation((float)Math.toRadians(arrow.getXRot()), (float)Math.toRadians(arrow.getYRot()), 0f));
                 AAALevel.addParticle(level, true,
-                        ARROW01.clone().position(p.x, p.y, p.z));
+                        ARROW01.clone().position(p.x, p.y, p.z).rotation((float)Math.toRadians(arrow.getXRot()), (float)Math.toRadians(arrow.getYRot()), 0f));
 
                 // === 添加區域傷害邏輯 ===
                 // 檢測箭矢周圍一格（1.0方塊）範圍內的敵對生物

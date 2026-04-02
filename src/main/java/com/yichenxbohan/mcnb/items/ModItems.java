@@ -17,6 +17,7 @@ public class ModItems {
         // 添加到战斗标签页
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(PARTICLE_TEST_ITEM);
+            event.accept(END_PORTAL_CORE_TEST_ITEM);
         }
 
         // 添加到杂项标签页
@@ -31,6 +32,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> PARTICLE_TEST_ITEM = ITEMS.register("particles_test_item",
             () -> new ParticlesTestItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> END_PORTAL_CORE_TEST_ITEM = ITEMS.register("end_portal_core_test_item",
+            () -> new EndPortalCoreTestItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

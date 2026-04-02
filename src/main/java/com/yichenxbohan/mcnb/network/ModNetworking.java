@@ -38,6 +38,41 @@ public class ModNetworking {
                 .encoder(DamageNumberPacket::toBytes)
                 .consumerMainThread(DamageNumberPacket::handle)
                 .add();
+
+        // 服務端 -> 客戶端：等級/經驗同步
+        INSTANCE.messageBuilder(LevelSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(LevelSyncPacket::new)
+                .encoder(LevelSyncPacket::toBytes)
+                .consumerMainThread(LevelSyncPacket::handle)
+                .add();
+
+        // 服務端 -> 客戶端：升級通知
+        INSTANCE.messageBuilder(LevelUpPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(LevelUpPacket::new)
+                .encoder(LevelUpPacket::toBytes)
+                .consumerMainThread(LevelUpPacket::handle)
+                .add();
+
+        // 服務端 -> 客戶端：戰鬥屬性同步
+        INSTANCE.messageBuilder(StatsSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(StatsSyncPacket::new)
+                .encoder(StatsSyncPacket::toBytes)
+                .consumerMainThread(StatsSyncPacket::handle)
+                .add();
+
+        // 客戶端 -> 服務端：選擇職業
+        INSTANCE.messageBuilder(ClassSelectPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ClassSelectPacket::new)
+                .encoder(ClassSelectPacket::toBytes)
+                .consumerMainThread(ClassSelectPacket::handle)
+                .add();
+
+        // 服務端 -> 客戶端：同步職業
+        INSTANCE.messageBuilder(ClassSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(ClassSyncPacket::new)
+                .encoder(ClassSyncPacket::toBytes)
+                .consumerMainThread(ClassSyncPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

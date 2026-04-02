@@ -4,7 +4,9 @@ import com.yichenxbohan.mcnb.combat.*;
 import com.yichenxbohan.mcnb.combat.damage.DamageHandler;
 import com.yichenxbohan.mcnb.combat.damage.DamagePacket;
 import com.yichenxbohan.mcnb.combat.damage.DamageTypeEx;
+import com.yichenxbohan.mcnb.level.LevelDamageModifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -44,6 +46,23 @@ public class DamageEventHandler {
 
         event.setCanceled(true);
 
+        // ===== 等級差距檢查 =====
+        float levelMult = LevelDamageModifier.getMultiplier(attacker, target);
+        if (levelMult <= 0f) {
+            // 等級差距過大，無法造成傷害
+            // 若攻擊者是玩家則提示
+            if (attacker instanceof ServerPlayer sp) {
+                int atkLv = LevelDamageModifier.getLevel(attacker);
+                int defLv = LevelDamageModifier.getLevel(target);
+                sp.sendSystemMessage(
+                    net.minecraft.network.chat.Component.literal(
+                        "§c等級差距過大（你 Lv." + atkLv + " / 目標 Lv." + defLv + "），無法造成傷害！"
+                    )
+                );
+            }
+            return;
+        }
+
         // 獲取戰鬥屬性
         CombatStats atkStats = StatsProvider.get(attacker);
         CombatStats defStats = StatsProvider.get(target);
@@ -51,13 +70,19 @@ public class DamageEventHandler {
         // 判斷傷害類型
         DamageTypeEx damageType = getDamageType(event.getSource());
 
+        // 物理傷害沿用原版攻擊值；非物理類型取 atkStats 對應的攻擊力
+        // （其他類型攻擊力已在 StatsProvider 中以 magicAttack 為基礎計算好）
+        float damageValue = (damageType == DamageTypeEx.PHYSICAL)
+                ? event.getAmount()
+                : (float) atkStats.getAttackFor(damageType);
+
         // 使用新的傷害系統
         DamagePacket packet = new DamagePacket(attacker, target)
-            .set(damageType, event.getAmount()) // 使用原始傷害值
+            .set(damageType, damageValue)
             .withCrit((float) atkStats.critChance, (float) (1.5 + atkStats.critDamage))
             .withPenetration((float) atkStats.penetration)
             .withDamageBonus((float) atkStats.damageBonus)
-            .withFinalMultiplier((float) atkStats.finalDamageMultiplier);
+            .withFinalMultiplier((float)(atkStats.finalDamageMultiplier * levelMult)); // 考慮等級差距
 
         // 計算傷害（不直接造成，我們自己處理）
         DamageResult result = DamageHandler.calculate(packet, atkStats, defStats);
@@ -127,16 +152,12 @@ public class DamageEventHandler {
 
         return switch (msgId) {
             case "magic", "indirectMagic", "witherSkull", "dragonBreath" -> DamageTypeEx.MAGIC;
-            case "lightningBolt" -> DamageTypeEx.ENERGY;
-            case "wither" -> DamageTypeEx.SOUL;
-            case "sonic_boom" -> DamageTypeEx.CHAOS; // 監守者的音波攻擊
-            case "freeze" -> DamageTypeEx.SPATIAL;
-            case "outOfWorld" -> DamageTypeEx.TRUE; // 虛空傷害
-            case "fall", "flyIntoWall" -> DamageTypeEx.PHYSICAL; // 摔落傷害
-            case "onFire", "inFire", "lava" -> DamageTypeEx.ENERGY; // 火焰傷害
-            case "drown", "starve" -> DamageTypeEx.TRUE; // 溺水、飢餓
-            case "cactus", "sweetBerryBush", "stalagmite" -> DamageTypeEx.PHYSICAL; // 環境傷害
-            default -> DamageTypeEx.PHYSICAL;
+            case "lightningBolt", "onFire", "inFire", "lava"             -> DamageTypeEx.ENERGY;
+            case "wither"                                                  -> DamageTypeEx.SOUL;
+            case "sonic_boom"                                              -> DamageTypeEx.CHAOS;
+            case "freeze"                                                  -> DamageTypeEx.SPATIAL;
+            case "outOfWorld", "drown", "starve"                          -> DamageTypeEx.TRUE;
+            default                                                        -> DamageTypeEx.PHYSICAL;
         };
     }
 }

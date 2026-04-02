@@ -1,5 +1,7 @@
 {
   "key.categories.mcnb": "魔法大陸:新生 技能",
   "key.mcnb.soul_bow": "射魂長弓",
-  "item.mcnb.particles_test_item": "粒子測試工具"
+  "key.mcnb.stats_panel": "屬性面板",
+  "item.mcnb.particles_test_item": "粒子測試工具",
+  "gui.mcnb.stats_panel": "屬性面板"
 }

@@ -99,10 +99,18 @@ public class BowChargingEventHandler {
                     .add(rightVec.scale(offsetX))
                     .add(upVec.scale(offsetY));
 
+            // 計算旋轉（將玩家的朝向轉成弧度傳給顆粒系統）
+            float yawDeg = player.getYRot();
+            float pitchDeg = player.getXRot();
+            double rotY = Math.toRadians(yawDeg);
+            double rotX = Math.toRadians(pitchDeg);
+            double rotZ = 0.0;
+
             AAALevel.addParticle(level, false,
-                    CHARGING_PARTICLE.clone().position(
-                            finalPos.x, finalPos.y, finalPos.z
-                    ));
+                    CHARGING_PARTICLE.clone()
+                            .position(finalPos.x, finalPos.y, finalPos.z)
+                            .rotation((float) rotX, (float) rotY, (float) rotZ)
+            );
         }
 
         // 当拉满弓时，在玩家周围生成额外的粒子环
@@ -115,8 +123,15 @@ public class BowChargingEventHandler {
                 double y = playerPos.y;
                 double z = playerPos.z + Math.sin(angle) * radius;
 
+                // 使用玩家朝向設定旋轉
+                float yawDeg = player.getYRot();
+                float pitchDeg = player.getXRot();
+                double rotY = Math.toRadians(yawDeg);
+                double rotX = Math.toRadians(pitchDeg);
+                double rotZ = 0.0;
+
                 AAALevel.addParticle(level, false,
-                        CHARGING_PARTICLE.clone().position(x, y, z));
+                        CHARGING_PARTICLE.clone().position(x, y, z).rotation((float) rotX, (float) rotY, (float) rotZ));
             }
         }
     }
@@ -135,4 +150,3 @@ public class BowChargingEventHandler {
         chargingPlayers.clear();
     }
 }
-

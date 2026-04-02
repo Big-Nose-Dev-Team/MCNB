@@ -5,10 +5,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class CombatDataProvider implements ICapabilityProvider {
+public class CombatDataProvider implements ICapabilitySerializable<CompoundTag> {
     public static final ResourceLocation ID =
             new ResourceLocation("mcnb", "combat_data");
 
@@ -20,12 +20,6 @@ public class CombatDataProvider implements ICapabilityProvider {
         return cap == ModCapabilities.COMBAT_DATA ? optional.cast() : LazyOptional.empty();
     }
 
-    //存檔
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = new CompoundTag();
-        return tag;
-    }
-
-    public void deserializeNBT(CompoundTag tag) {
-    }
+    @Override public CompoundTag serializeNBT()              { return data.serializeNBT(); }
+    @Override public void        deserializeNBT(CompoundTag t){ data.deserializeNBT(t); }
 }

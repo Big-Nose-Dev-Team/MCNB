@@ -3,10 +3,9 @@ package com.yichenxbohan.mcnb;
 import com.mojang.logging.LogUtils;
 import com.yichenxbohan.mcnb.items.ModItems;
 import com.yichenxbohan.mcnb.network.ModNetworking;
+import com.yichenxbohan.mcnb.particle.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -30,6 +29,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import net.minecraft.world.item.BlockItem;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Mcnb.MODID)
@@ -46,24 +46,18 @@ public class Mcnb {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "mcnb" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    // Creates a new Block with the id "mcnb:example_block", combining the namespace and path
     public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
-    // Creates a new BlockItem with the id "mcnb:example_block", combining the namespace and path
+    public static final RegistryObject<Block> END_PORTAL_CUSTOM_BLOCK = BLOCKS.register("end_portal_custom_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).lightLevel((state) -> 15).noOcclusion()));
     public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
-
-    // Creates a new food item with the id "mcnb:example_id", nutrition 1 and saturation 2
-    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(2f).build())));
-
-    // Creates a creative tab with the id "mcnb:example_tab" for the example item, that is placed after the combat tab
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> EXAMPLE_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
-        output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-    }).build());
+    public static final RegistryObject<Item> END_PORTAL_CUSTOM_BLOCK_ITEM = ITEMS.register("end_portal_custom_block", () -> new BlockItem(END_PORTAL_CUSTOM_BLOCK.get(), new Item.Properties()));
 
     public Mcnb() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register ModItems to the mod event bus
         ModItems.register(modEventBus);
+        // Register ModParticles to the mod event bus
+        ModParticles.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -105,7 +99,10 @@ public class Mcnb {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(EXAMPLE_BLOCK_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(EXAMPLE_BLOCK_ITEM);
+            event.accept(END_PORTAL_CUSTOM_BLOCK_ITEM);
+        }
 
         // 调用 ModItems 的方法来添加所有物品
         ModItems.addCreativeTabItems(event);

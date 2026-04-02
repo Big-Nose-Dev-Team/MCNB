@@ -37,8 +37,8 @@ public class DamageNumberRenderer {
     // 數字上升速度
     private static final double RISE_SPEED = 0.04;
 
-    // 基礎縮放
-    private static final float BASE_SCALE = 0.025f;
+    // 減小基礎縮放，讓字體線條更細
+    private static final float BASE_SCALE = 0.0125f;
 
     // ==================== 自訂樣式系統 ====================
 
@@ -101,115 +101,53 @@ public class DamageNumberRenderer {
      * 初始化默認樣式
      */
     private static void initDefaultStyles() {
-        // 物理傷害 - 白色，普通樣式
+        // 物理傷害
         DAMAGE_STYLES.put(DamageTypeEx.PHYSICAL, new DamageStyle()
-            .color(0xFFFFFF)
-            .critColor(0xFFFF55)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .scale(1.2f)
-            .critScale(2.2f)
-            .glow(true)
+            .color(0xFFFFFF).critColor(0xFFFF55)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .scale(1.0f).critScale(1.5f).glow(false)
         );
-
-        // 魔法傷害 - 紫色，帶魔法符號
+        // 魔法傷害
         DAMAGE_STYLES.put(DamageTypeEx.MAGIC, new DamageStyle()
-            .color(0xAA55FF)
-            .critColor(0xDD88FF)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .scale(1.2f)
-            .critScale(2.2f)
-            .glow(true)
+            .color(0xAA55FF).critColor(0xDD88FF)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .scale(1.0f).critScale(1.5f).glow(false)
         );
-
-        // 能量傷害 - 金色，閃電符號
+        // 能量傷害
         DAMAGE_STYLES.put(DamageTypeEx.ENERGY, new DamageStyle()
-            .color(0xFFD700)
-            .critColor(0xFFFF00)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .glow(true)
-            .scale(1.2f)
-            .critScale(2.2f)
+            .color(0xFFD700).critColor(0xFFFF00)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .scale(1.0f).critScale(1.5f).glow(false)
         );
-
-        // 真實傷害 - 紅色，穿透符號，抖動效果
+        // 真實傷害
         DAMAGE_STYLES.put(DamageTypeEx.TRUE, new DamageStyle()
-            .color(0xFF3333)
-            .critColor(0xFF0000)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .scale(1.2f)
-            .critScale(2.2f)
-            .shake(true)
-            .glow(true)
+            .color(0xFF3333).critColor(0xFF0000)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .scale(1.0f).critScale(1.5f).shake(true).glow(false)
         );
-
-        // 靈魂傷害 - 青綠色，幽靈符號
+        // 靈魂傷害
         DAMAGE_STYLES.put(DamageTypeEx.SOUL, new DamageStyle()
-            .color(0x00FFCC)
-            .critColor(0x55FFDD)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .riseSpeed(0.7)
-            .scale(1.2f)
-            .critScale(2.2f)
-            .glow(true)
+            .color(0x00FFCC).critColor(0x55FFDD)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .riseSpeed(0.7).scale(1.0f).critScale(1.5f).glow(false)
         );
-
-        // 混沌傷害 - 品紅色，彩虹效果
+        // 混沌傷害
         DAMAGE_STYLES.put(DamageTypeEx.CHAOS, new DamageStyle()
-            .color(0xFF55FF)
-            .critColor(0xFF88FF)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .rainbow(true)  // 彩虹色效果
-            .shake(true)
-            .scale(1.2f)
-            .critScale(2.2f)
-            .glow(true)
+            .color(0xFF55FF).critColor(0xFF88FF)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .rainbow(true).shake(true).scale(1.0f).critScale(1.5f).glow(false)
         );
-
-        // 空間傷害 - 淺藍色，雪花符號
+        // 空間傷害
         DAMAGE_STYLES.put(DamageTypeEx.SPATIAL, new DamageStyle()
-            .color(0x55CCFF)
-            .critColor(0x88DDFF)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .riseSpeed(0.5)  // 很慢上升，像被凍住
-            .scale(1.2f)
-            .critScale(2.2f)
-            .glow(true)
+            .color(0x55CCFF).critColor(0x88DDFF)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .riseSpeed(0.5).scale(1.0f).critScale(1.5f).glow(false)
         );
-
-        // 時空傷害 - 銀色，時鐘符號
+        // 時空傷害
         DAMAGE_STYLES.put(DamageTypeEx.TEMPORAL, new DamageStyle()
-            .color(0xDDDDDD)
-            .critColor(0xFFFFFF)
-            .prefix("")
-            .suffix("")
-            .critPrefix("!")
-            .critSuffix("")
-            .glow(true)
-            .riseSpeed(1.5)  // 快速上升
-            .scale(1.2f)
-            .critScale(2.2f)
-            .glow(true)
+            .color(0xDDDDDD).critColor(0xFFFFFF)
+            .prefix("").suffix("").critPrefix("✦ ").critSuffix("")
+            .riseSpeed(1.5).scale(1.0f).critScale(1.5f).glow(false)
         );
     }
 
@@ -397,27 +335,15 @@ public class DamageNumberRenderer {
         float textWidth = font.width(text);
         Matrix4f matrix = poseStack.last().pose();
 
-        // 發光效果（多層描邊）- 使用更細的發光
-        if (style.glow) {
-            int glowColor = (color & 0x00FFFFFF) | ((int)(alpha * 60) << 24);
-            for (float glowOffset = 1.0f; glowOffset >= 0.5f; glowOffset -= 0.5f) {
-                font.drawInBatch(text, -textWidth / 2 - glowOffset, 0, glowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-                font.drawInBatch(text, -textWidth / 2 + glowOffset, 0, glowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-                font.drawInBatch(text, -textWidth / 2, -glowOffset, glowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-                font.drawInBatch(text, -textWidth / 2, glowOffset, glowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-            }
-        }
-
         // 細描邊（減少偏移量使字體更細）
-        int shadowColor = ((int)(alpha * 150) << 24);
-        float shadowOffset = 0.5f;
+        int shadowColor = ((int)(alpha * 120) << 24);
+        float shadowOffset = 0.25f; // 更小的偏移量看起來更細
+        // 簡化陰影層，只畫兩個偏移，並降低透明度
         font.drawInBatch(text, -textWidth / 2 - shadowOffset, 0, shadowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
         font.drawInBatch(text, -textWidth / 2 + shadowOffset, 0, shadowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-        font.drawInBatch(text, -textWidth / 2, -shadowOffset, shadowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-        font.drawInBatch(text, -textWidth / 2, shadowOffset, shadowColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
 
-        // 主文字
-        font.drawInBatch(text, -textWidth / 2, 0, color, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+         // 主文字
+         font.drawInBatch(text, -textWidth / 2, 0, color, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
 
         poseStack.popPose();
     }

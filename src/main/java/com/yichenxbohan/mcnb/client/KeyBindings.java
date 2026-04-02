@@ -17,5 +17,22 @@ public class KeyBindings {
             GLFW.GLFW_KEY_X,
             KEY_CATEGORY
     );
-}
 
+    // 屬性面板（預設 C 鍵）
+    public static final KeyMapping STATS_PANEL_KEY = new KeyMapping(
+            "key.mcnb.stats_panel",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_C,
+            KEY_CATEGORY
+    );
+
+    // 大選單（預設 M 鍵）
+    public static final KeyMapping MAIN_MENU_KEY = new KeyMapping(
+            "key.mcnb.main_menu",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_M,
+            KEY_CATEGORY
+    );
+}

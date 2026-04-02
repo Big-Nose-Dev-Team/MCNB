@@ -1,7 +1,7 @@
 {
   "key.categories.mcnb": "MCNB Skills",
   "key.mcnb.soul_bow": "Soul Bow",
-  "item.mcnb.particles_test_item": "particles test item"
+  "key.mcnb.stats_panel": "Stats Panel",
+  "item.mcnb.particles_test_item": "particles test item",
+  "gui.mcnb.stats_panel": "Stats Panel"
 }
-
-

@@ -12,5 +12,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onKeyRegister(RegisterKeyMappingsEvent event) {
         event.register(KeyBindings.SOUL_BOW_KEY);
+        event.register(KeyBindings.STATS_PANEL_KEY);
+        event.register(KeyBindings.MAIN_MENU_KEY);
     }
 }
