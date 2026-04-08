@@ -12,7 +12,7 @@ public class ModNetworking {
 
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(Mcnb.MODID, "main"),
+            ResourceLocation.fromNamespaceAndPath(Mcnb.MODID, "main"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
@@ -58,6 +58,13 @@ public class ModNetworking {
                 .decoder(StatsSyncPacket::new)
                 .encoder(StatsSyncPacket::toBytes)
                 .consumerMainThread(StatsSyncPacket::handle)
+                .add();
+
+        // 客戶端 -> 服務端：調整屬性點
+        INSTANCE.messageBuilder(AttributePointPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AttributePointPacket::new)
+                .encoder(AttributePointPacket::toBytes)
+                .consumerMainThread(AttributePointPacket::handle)
                 .add();
 
         // 客戶端 -> 服務端：選擇職業

@@ -22,6 +22,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 import static com.yichenxbohan.mcnb.ModSounds.SWORD_ENERGY;
 
 public class ParticlesTestItem extends Item {
@@ -42,7 +44,11 @@ public class ParticlesTestItem extends Item {
         if(!level.isClientSide){
 
             float yaw = player.getYRot();
+            float z = player.getXRot();
+            Random rand = new Random();
+            int randomInt = rand.nextInt(181);
             float rotationY = (float) Math.toRadians(-yaw-90);
+            float rotationZ = (float) Math.toRadians(z);
 
             AAALevel.addParticle(level, true, SLASH.clone()
                     .position(
@@ -50,7 +56,7 @@ public class ParticlesTestItem extends Item {
                             pos.getY()+0d,
                             pos.getZ()+0d
                     )
-                    .rotation(0, rotationY, 0)
+                    .rotation(0, rotationY, -rotationZ)
             );
         }
         return InteractionResultHolder.success(itemStack);

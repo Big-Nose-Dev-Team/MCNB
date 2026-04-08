@@ -6,6 +6,9 @@ package com.yichenxbohan.mcnb.level;
  */
 public interface IPlayerLevel {
 
+    /** 每升 1 級可獲得的屬性點數 */
+    int POINTS_PER_LEVEL = 3;
+
     /** 取得目前等級 */
     int getLevel();
 
@@ -29,6 +32,27 @@ public interface IPlayerLevel {
 
     /** 取得等級上限 */
     int getMaxLevel();
+
+    /** 取得已分配的屬性點數總量 */
+    int getAllocatedAttributePoints();
+
+    /** 取得尚未分配的屬性點數 */
+    int getAvailableAttributePoints();
+
+    /** 取得指定屬性的點數 */
+    int getAttributePoints(PlayerAttributeType type);
+
+    /** 直接設定指定屬性的點數 */
+    void setAttributePoints(PlayerAttributeType type, int points);
+
+    /** 直接設定五項屬性點數 */
+    void setAttributePoints(int strength, int constitution, int potential, int intelligence, int agility);
+
+    /** 嘗試對指定屬性增減點數，成功回傳 true */
+    boolean adjustAttributePoints(PlayerAttributeType type, int delta);
+
+    /** 將所有屬性點重置為 0 */
+    boolean resetAttributePoints();
 
     /** 是否為滿等 */
     boolean isMaxLevel();

@@ -4,8 +4,8 @@ import com.yichenxbohan.mcnb.ModCapabilities;
 import com.yichenxbohan.mcnb.combat.StatsProvider;
 import com.yichenxbohan.mcnb.level.EntityLevelData;
 import com.yichenxbohan.mcnb.level.EntityLevelProvider;
-import com.yichenxbohan.mcnb.level.IEntityLevel;
 import com.yichenxbohan.mcnb.level.LevelDamageModifier;
+import com.yichenxbohan.mcnb.level.PlayerAttributeType;
 import com.yichenxbohan.mcnb.level.PlayerLevelProvider;
 import com.yichenxbohan.mcnb.network.ClassSyncPacket;
 import com.yichenxbohan.mcnb.network.LevelSyncPacket;
@@ -81,12 +81,19 @@ public class PlayerLevelEvents {
                 event.getEntity().getCapability(ModCapabilities.PLAYER_LEVEL).ifPresent(newCap -> {
                     newCap.setLevel(oldCap.getLevel());
                     newCap.setExp(oldCap.getExp());
+                    newCap.setAttributePoints(
+                            oldCap.getAttributePoints(PlayerAttributeType.STRENGTH),
+                            oldCap.getAttributePoints(PlayerAttributeType.CONSTITUTION),
+                            oldCap.getAttributePoints(PlayerAttributeType.POTENTIAL),
+                            oldCap.getAttributePoints(PlayerAttributeType.INTELLIGENCE),
+                            oldCap.getAttributePoints(PlayerAttributeType.AGILITY)
+                    );
                 })
             );
             // 複製職業
             event.getOriginal().reviveCaps();
-            IPlayerClass oldClass = ModCapabilities.getPlayerClass((net.minecraft.world.entity.player.Player) event.getOriginal());
-            IPlayerClass newClass = ModCapabilities.getPlayerClass((net.minecraft.world.entity.player.Player) event.getEntity());
+            IPlayerClass oldClass = ModCapabilities.getPlayerClass(event.getOriginal());
+            IPlayerClass newClass = ModCapabilities.getPlayerClass(event.getEntity());
             if (oldClass != null && newClass != null) {
                 newClass.setPlayerClass(oldClass.getPlayerClass());
             }
@@ -175,7 +182,14 @@ public class PlayerLevelEvents {
 
     public static void syncToClient(ServerPlayer player) {
         player.getCapability(ModCapabilities.PLAYER_LEVEL).ifPresent(cap -> {
-            ModNetworking.sendToPlayer(new LevelSyncPacket(cap.getLevel(), cap.getExp()), player);
+            ModNetworking.sendToPlayer(new LevelSyncPacket(
+                    cap.getLevel(), cap.getExp(),
+                    cap.getAttributePoints(PlayerAttributeType.STRENGTH),
+                    cap.getAttributePoints(PlayerAttributeType.CONSTITUTION),
+                    cap.getAttributePoints(PlayerAttributeType.POTENTIAL),
+                    cap.getAttributePoints(PlayerAttributeType.INTELLIGENCE),
+                    cap.getAttributePoints(PlayerAttributeType.AGILITY)
+            ), player);
             cap.clearDirty();
         });
     }
