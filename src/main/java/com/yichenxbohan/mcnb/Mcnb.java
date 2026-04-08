@@ -58,6 +58,8 @@ public class Mcnb {
         ModItems.register(modEventBus);
         // Register ModParticles to the mod event bus
         ModParticles.register(modEventBus);
+        // Register ModSounds to the mod event bus
+        ModSounds.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,8 +17,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class StatsScreen extends Screen {
 
     // ── 面板尺寸（動態，在 init() 計算）──
-    private static final int PANEL_MAX_W = 280;
-    private static final int PANEL_MAX_H = 300;
+    private static final int PANEL_MAX_W = 420;
+    private static final int PANEL_MAX_H = 420;
+    private static final int PANEL_MIN_W = 220;
+    private static final int PANEL_MIN_H = 180;
     /** 底部安全距離：熱欄22 + 血量/飢餓10 + AppleSkin10 + 間距6 = 48 */
     private static final int BOTTOM_SAFE = 48;
     private static final int TOP_SAFE    = 8;
@@ -49,6 +52,10 @@ public class StatsScreen extends Screen {
     private int panelX, panelY;
     private int panelW, panelH; // init() 內計算
 
+    // 內容區滾動
+    private int contentScroll = 0;
+    private int maxScroll = 0;
+
     // 拖曳狀態
     private boolean dragging = false;
     private int dragOffX, dragOffY;
@@ -60,11 +67,19 @@ public class StatsScreen extends Screen {
     @Override
     protected void init() {
         int availH = height - TOP_SAFE - BOTTOM_SAFE;
-        int availW = Math.min(width - 20, PANEL_MAX_W);
-        panelW = availW;
-        panelH = Math.min(availH, PANEL_MAX_H);
+
+        // 依螢幕比例自適應，同時保留最小/最大尺寸
+        panelW = Mth.clamp((int) (width * 0.38f), PANEL_MIN_W, PANEL_MAX_W);
+        panelW = Math.min(panelW, Math.max(120, width - 12));
+
+        panelH = Mth.clamp((int) (height * 0.70f), PANEL_MIN_H, PANEL_MAX_H);
+        panelH = Math.min(panelH, Math.max(120, availH));
+
         panelX = (width  - panelW) / 2;
         panelY = TOP_SAFE + (availH - panelH) / 2;
+
+        contentScroll = 0;
+        maxScroll = 0;
     }
 
     @Override
@@ -141,8 +156,14 @@ public class StatsScreen extends Screen {
             special2[2] = cap.getSoulIntegrity();
         });
 
-        int cursor = y + headerH + 6;
+        int contentTop = y + headerH + 4;
+        int contentBottom = y + h - 6;
+        int contentHeight = Math.max(0, contentBottom - contentTop);
+        int cursor = contentTop + 2 - contentScroll;
         int pad    = x + 8;
+
+        // 僅在內容區內繪製可滾動內容
+        g.enableScissor(x + 2, contentTop, x + w - 2, contentBottom);
 
         // ── 等級區塊 ──
         cursor = drawLevelSection(g, pad, cursor, x + w, levelInfo);
@@ -173,7 +194,32 @@ public class StatsScreen extends Screen {
         cursor = drawBarRow(g, pad, cursor, w - 20,
                 "☯ 靈魂完整", special2[2], 100f, C_SOUL);
         cursor = drawStatRow(g, pad, cursor, w - 16, "♥ 生命回復", fmt2(special[2]) + "/s", C_SPATIAL);
-        drawStatRow   (g, pad, cursor, w - 16, "✚ 治療加成", "+" + fmt1(special[1]) + "%", C_SPATIAL);
+        cursor = drawStatRow(g, pad, cursor, w - 16, "✚ 治療加成", "+" + fmt1(special[1]) + "%", C_SPATIAL);
+
+        g.disableScissor();
+
+        int totalContentHeight = (cursor + contentScroll) - (contentTop + 2);
+        maxScroll = Math.max(0, totalContentHeight - contentHeight);
+        contentScroll = Mth.clamp(contentScroll, 0, maxScroll);
+
+        drawScrollBar(g, x + w - 5, contentTop, contentBottom);
+    }
+
+    private void drawScrollBar(GuiGraphics g, int x, int top, int bottom) {
+        if (maxScroll <= 0) return;
+
+        int trackW = 3;
+        int trackH = bottom - top;
+        if (trackH <= 0) return;
+
+        g.fill(x, top, x + trackW, bottom, 0x442A3344);
+
+        float ratio = (float) (trackH) / (trackH + maxScroll);
+        int thumbH = Math.max(16, (int) (trackH * ratio));
+        int travel = trackH - thumbH;
+        int thumbY = top + (maxScroll == 0 ? 0 : (int) (travel * (contentScroll / (float) maxScroll)));
+
+        g.fill(x, thumbY, x + trackW, thumbY + thumbH, 0xAA9BB6FF);
     }
 
     // ══════════════════════════════════════════════════
@@ -285,7 +331,7 @@ public class StatsScreen extends Screen {
     @Override
     public boolean mouseClicked(double mx, double my, int button) {
         if (button == 0 &&
-                mx >= panelX && mx <= panelX + PANEL_MAX_W &&
+                mx >= panelX && mx <= panelX + panelW &&
                 my >= panelY && my <= panelY + 22) {
             dragging  = true;
             dragOffX  = (int) mx - panelX;
@@ -312,5 +358,16 @@ public class StatsScreen extends Screen {
             return true;
         }
         return super.mouseDragged(mx, my, button, dx, dy);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mx, double my, double delta) {
+        boolean inPanel = mx >= panelX && mx <= panelX + panelW && my >= panelY && my <= panelY + panelH;
+        if (inPanel && maxScroll > 0) {
+            int step = 14;
+            contentScroll = Mth.clamp(contentScroll - (int) (delta * step), 0, maxScroll);
+            return true;
+        }
+        return super.mouseScrolled(mx, my, delta);
     }
 }

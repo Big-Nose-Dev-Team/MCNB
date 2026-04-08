@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -21,6 +22,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import static com.yichenxbohan.mcnb.ModSounds.SWORD_ENERGY;
+
 public class ParticlesTestItem extends Item {
 
     public ParticlesTestItem(Properties properties) {
@@ -31,6 +34,9 @@ public class ParticlesTestItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+
+        level.playSound(null, player.blockPosition(), SWORD_ENERGY.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
+
         ItemStack itemStack = player.getItemInHand(hand);
         BlockPos pos = player.getOnPos();
         if(!level.isClientSide){
