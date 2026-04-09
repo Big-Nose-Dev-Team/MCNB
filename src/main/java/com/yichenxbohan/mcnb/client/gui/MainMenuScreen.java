@@ -90,6 +90,23 @@ public class MainMenuScreen extends Screen {
                         Minecraft.getInstance().setScreen(new StatsScreen());
                     }
                 }
+            ),
+            new MenuButton(
+                startX, startY + BTN_H + 10,
+                BTN_W, BTN_H,
+                "✦  職業技能",
+                finalCls == PlayerClass.NONE
+                    ? "請先選擇職業後解鎖技能頁"
+                    : "開啟技能加點與技能樹分支",
+                finalCls == PlayerClass.NONE ? 0xFF999999 : 0xFF88CCFF,
+                0xFFBBBBCC,
+                () -> {
+                    if (finalCls == PlayerClass.NONE) {
+                        Minecraft.getInstance().setScreen(new ClassSelectScreen());
+                    } else {
+                        Minecraft.getInstance().setScreen(new SkillClassScreen());
+                    }
+                }
             )
             // 未來可在此繼續添加按鈕
         };

@@ -14,5 +14,11 @@ public class ClientEvents {
         event.register(KeyBindings.SOUL_BOW_KEY);
         event.register(KeyBindings.STATS_PANEL_KEY);
         event.register(KeyBindings.MAIN_MENU_KEY);
+        event.register(KeyBindings.SKILL_CAST_1);
+        event.register(KeyBindings.SKILL_CAST_2);
+        event.register(KeyBindings.SKILL_CAST_3);
+        event.register(KeyBindings.SKILL_CAST_4);
+        event.register(KeyBindings.SKILL_CAST_5);
+        event.register(KeyBindings.SKILL_CAST_6);
     }
 }

@@ -1,6 +1,7 @@
 package com.yichenxbohan.mcnb.network;
 
 import com.yichenxbohan.mcnb.Mcnb;
+import com.yichenxbohan.mcnb.skill.network.SkillPacketRegistrar;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -80,6 +81,9 @@ public class ModNetworking {
                 .encoder(ClassSyncPacket::toBytes)
                 .consumerMainThread(ClassSyncPacket::handle)
                 .add();
+
+        // 技能系統封包（API 自動註冊）
+        SkillPacketRegistrar.register(INSTANCE, ModNetworking::id);
     }
 
     public static <MSG> void sendToServer(MSG message) {

@@ -12,6 +12,7 @@ import com.yichenxbohan.mcnb.network.LevelSyncPacket;
 import com.yichenxbohan.mcnb.network.ModNetworking;
 import com.yichenxbohan.mcnb.network.StatsSyncPacket;
 import com.yichenxbohan.mcnb.playerclass.IPlayerClass;
+import com.yichenxbohan.mcnb.skill.SkillService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -69,6 +70,7 @@ public class PlayerLevelEvents {
             syncToClient(sp);
             syncStatsToClient(sp);
             syncClassToClient(sp);
+            SkillService.syncToClient(sp);
         }
     }
 
@@ -97,6 +99,12 @@ public class PlayerLevelEvents {
             if (oldClass != null && newClass != null) {
                 newClass.setPlayerClass(oldClass.getPlayerClass());
             }
+
+            event.getOriginal().getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(oldSkill ->
+                    event.getEntity().getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(newSkill ->
+                            newSkill.overwriteFrom(oldSkill.getSkillLevels(), oldSkill.getSelectedBranches())
+                    )
+            );
             event.getOriginal().invalidateCaps();
         }
     }
@@ -107,6 +115,7 @@ public class PlayerLevelEvents {
             syncToClient(sp);
             syncStatsToClient(sp);
             syncClassToClient(sp);
+            SkillService.syncToClient(sp);
         }
     }
 
@@ -118,6 +127,7 @@ public class PlayerLevelEvents {
             syncToClient(sp);
             syncStatsToClient(sp);
             syncClassToClient(sp);
+            SkillService.syncToClient(sp);
         }
     }
 

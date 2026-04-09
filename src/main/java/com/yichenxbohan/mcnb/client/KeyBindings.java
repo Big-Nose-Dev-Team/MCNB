@@ -35,4 +35,53 @@ public class KeyBindings {
             GLFW.GLFW_KEY_M,
             KEY_CATEGORY
     );
+
+    // 技能施放快捷鍵（預設 P O I L K J）
+    public static final KeyMapping SKILL_CAST_1 = new KeyMapping(
+            "key.mcnb.skill_cast_1",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_P,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping SKILL_CAST_2 = new KeyMapping(
+            "key.mcnb.skill_cast_2",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_O,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping SKILL_CAST_3 = new KeyMapping(
+            "key.mcnb.skill_cast_3",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_I,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping SKILL_CAST_4 = new KeyMapping(
+            "key.mcnb.skill_cast_4",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_L,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping SKILL_CAST_5 = new KeyMapping(
+            "key.mcnb.skill_cast_5",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_K,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping SKILL_CAST_6 = new KeyMapping(
+            "key.mcnb.skill_cast_6",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_J,
+            KEY_CATEGORY
+    );
 }

@@ -3,6 +3,7 @@ package com.yichenxbohan.mcnb.network;
 import com.yichenxbohan.mcnb.ModCapabilities;
 import com.yichenxbohan.mcnb.playerclass.IPlayerClass;
 import com.yichenxbohan.mcnb.playerclass.PlayerClass;
+import com.yichenxbohan.mcnb.skill.SkillService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -41,6 +42,7 @@ public class ClassSelectPacket {
 
             // 同步回客戶端
             ModNetworking.sendToPlayer(new ClassSyncPacket(playerClass), player);
+            SkillService.syncToClient(player);
         });
         ctx.get().setPacketHandled(true);
     }

@@ -2,6 +2,7 @@ package com.yichenxbohan.mcnb.events;
 
 import com.yichenxbohan.mcnb.combat.capability.CombatDataProvider;
 import com.yichenxbohan.mcnb.playerclass.PlayerClassProvider;
+import com.yichenxbohan.mcnb.skill.capability.PlayerSkillProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,6 +26,10 @@ public class CapabilityEvents {
             event.addCapability(
                     PlayerClassProvider.ID,
                     new PlayerClassProvider()
+            );
+            event.addCapability(
+                    PlayerSkillProvider.ID,
+                    new PlayerSkillProvider()
             );
         }
     }
