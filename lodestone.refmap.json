@@ -1,0 +1,124 @@
+{
+  "mappings": {
+    "team/lodestar/lodestone/mixin/GuiGraphicsMixin": {
+      "renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V": "Lnet/minecraft/client/gui/GuiGraphics;m_280405_(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V"
+    },
+    "team/lodestar/lodestone/mixin/GuiMixin": {
+      "renderHotbar": "Lnet/minecraft/client/gui/Gui;m_280518_(FLnet/minecraft/client/gui/GuiGraphics;)V"
+    },
+    "team/lodestar/lodestone/mixin/GameRendererMixin": {
+      "resize": "Lnet/minecraft/client/renderer/GameRenderer;m_109097_(II)V"
+    },
+    "team/lodestar/lodestone/mixin/BlockItemMixin": {
+      "place": "Lnet/minecraft/world/item/BlockItem;m_40576_(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;",
+      "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V": "Lnet/minecraft/world/level/Level;m_5594_(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"
+    },
+    "team/lodestar/lodestone/mixin/LivingEntityMixin": {
+      "Lnet/minecraft/world/entity/LivingEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V": "Lnet/minecraft/world/entity/LivingEntity;m_5496_(Lnet/minecraft/sounds/SoundEvent;FF)V",
+      "playBlockFallSound": "Lnet/minecraft/world/entity/LivingEntity;m_21229_()V"
+    },
+    "team/lodestar/lodestone/mixin/ScreenEffectRendererMixin": {
+      "Lnet/minecraft/client/player/LocalPlayer;isSpectator()Z": "Lnet/minecraft/client/player/LocalPlayer;m_5833_()Z",
+      "renderScreenEffect": "Lnet/minecraft/client/renderer/ScreenEffectRenderer;m_110718_(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+      "renderFire": "Lnet/minecraft/client/renderer/ScreenEffectRenderer;m_110728_(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+      "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V": "Lcom/mojang/blaze3d/vertex/PoseStack;m_252880_(FFF)V"
+    },
+    "team/lodestar/lodestone/mixin/MultiPlayerGameModeMixin": {
+      "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)V": "Lnet/minecraft/client/sounds/SoundManager;m_120367_(Lnet/minecraft/client/resources/sounds/SoundInstance;)V",
+      "continueDestroyBlock": "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;m_105283_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z"
+    },
+    "team/lodestar/lodestone/mixin/EntityMixin": {
+      "Lnet/minecraft/world/entity/Entity;updateSwimming()V": "Lnet/minecraft/world/entity/Entity;m_5844_()V",
+      "playStepSound": "Lnet/minecraft/world/entity/Entity;m_7355_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+      "setSecondsOnFire": "Lnet/minecraft/world/entity/Entity;m_20254_(I)V",
+      "baseTick": "Lnet/minecraft/world/entity/Entity;m_6075_()V",
+      "Lnet/minecraft/world/level/block/SoundType;getStepSound()Lnet/minecraft/sounds/SoundEvent;": "Lnet/minecraft/world/level/block/SoundType;m_56776_()Lnet/minecraft/sounds/SoundEvent;",
+      "Lnet/minecraft/world/entity/Entity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V": "Lnet/minecraft/world/entity/Entity;m_5496_(Lnet/minecraft/sounds/SoundEvent;FF)V"
+    },
+    "team/lodestar/lodestone/mixin/LevelRendererMixin": {
+      "renderLevel": "Lnet/minecraft/client/renderer/LevelRenderer;m_109599_(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;)V",
+      "Lnet/minecraft/world/level/block/Block;stateById(I)Lnet/minecraft/world/level/block/state/BlockState;": "Lnet/minecraft/world/level/block/Block;m_49803_(I)Lnet/minecraft/world/level/block/state/BlockState;",
+      "Lnet/minecraft/client/multiplayer/ClientLevel;playLocalSound(Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V": "Lnet/minecraft/client/multiplayer/ClientLevel;m_245747_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V",
+      "levelEvent": "Lnet/minecraft/client/renderer/LevelRenderer;m_234304_(ILnet/minecraft/core/BlockPos;I)V",
+      "net.minecraft.client.renderer.PostChain.process(F)V": "Lnet/minecraft/client/renderer/PostChain;m_110023_(F)V"
+    },
+    "team/lodestar/lodestone/mixin/ItemStackMixin": {
+      "getTooltipLines": "Lnet/minecraft/world/item/ItemStack;m_41651_(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;",
+      "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;getOperation()Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;": "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;m_22217_()Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;",
+      "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;getId()Ljava/util/UUID;": "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;m_22209_()Ljava/util/UUID;"
+    },
+    "team/lodestar/lodestone/mixin/CameraMixin": {
+      "setup": "Lnet/minecraft/client/Camera;m_90575_(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/world/entity/Entity;ZZF)V"
+    },
+    "team/lodestar/lodestone/mixin/EffectProgramMixin": {
+      "compileShader": "Lcom/mojang/blaze3d/shaders/EffectProgram;m_166588_(Lcom/mojang/blaze3d/shaders/Program$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;)Lcom/mojang/blaze3d/shaders/EffectProgram;",
+      "Lcom/mojang/blaze3d/shaders/EffectProgram;compileShaderInternal(Lcom/mojang/blaze3d/shaders/Program$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;Lcom/mojang/blaze3d/preprocessor/GlslPreprocessor;)I": "Lcom/mojang/blaze3d/shaders/EffectProgram;m_166612_(Lcom/mojang/blaze3d/shaders/Program$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;Lcom/mojang/blaze3d/preprocessor/GlslPreprocessor;)I"
+    },
+    "team/lodestar/lodestone/mixin/EntityRenderDispatcherMixin": {
+      "Lnet/minecraft/client/renderer/entity/EntityRenderer;render(Lnet/minecraft/world/entity/Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "Lnet/minecraft/client/renderer/entity/EntityRenderer;m_7392_(Lnet/minecraft/world/entity/Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+      "render": "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;m_114384_(Lnet/minecraft/world/entity/Entity;DDDFFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
+    }
+  },
+  "data": {
+    "searge": {
+      "team/lodestar/lodestone/mixin/GuiGraphicsMixin": {
+        "renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V": "Lnet/minecraft/client/gui/GuiGraphics;m_280405_(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V"
+      },
+      "team/lodestar/lodestone/mixin/GuiMixin": {
+        "renderHotbar": "Lnet/minecraft/client/gui/Gui;m_280518_(FLnet/minecraft/client/gui/GuiGraphics;)V"
+      },
+      "team/lodestar/lodestone/mixin/GameRendererMixin": {
+        "resize": "Lnet/minecraft/client/renderer/GameRenderer;m_109097_(II)V"
+      },
+      "team/lodestar/lodestone/mixin/BlockItemMixin": {
+        "place": "Lnet/minecraft/world/item/BlockItem;m_40576_(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;",
+        "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V": "Lnet/minecraft/world/level/Level;m_5594_(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"
+      },
+      "team/lodestar/lodestone/mixin/LivingEntityMixin": {
+        "Lnet/minecraft/world/entity/LivingEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V": "Lnet/minecraft/world/entity/LivingEntity;m_5496_(Lnet/minecraft/sounds/SoundEvent;FF)V",
+        "playBlockFallSound": "Lnet/minecraft/world/entity/LivingEntity;m_21229_()V"
+      },
+      "team/lodestar/lodestone/mixin/ScreenEffectRendererMixin": {
+        "Lnet/minecraft/client/player/LocalPlayer;isSpectator()Z": "Lnet/minecraft/client/player/LocalPlayer;m_5833_()Z",
+        "renderScreenEffect": "Lnet/minecraft/client/renderer/ScreenEffectRenderer;m_110718_(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+        "renderFire": "Lnet/minecraft/client/renderer/ScreenEffectRenderer;m_110728_(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+        "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V": "Lcom/mojang/blaze3d/vertex/PoseStack;m_252880_(FFF)V"
+      },
+      "team/lodestar/lodestone/mixin/MultiPlayerGameModeMixin": {
+        "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)V": "Lnet/minecraft/client/sounds/SoundManager;m_120367_(Lnet/minecraft/client/resources/sounds/SoundInstance;)V",
+        "continueDestroyBlock": "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;m_105283_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z"
+      },
+      "team/lodestar/lodestone/mixin/EntityMixin": {
+        "Lnet/minecraft/world/entity/Entity;updateSwimming()V": "Lnet/minecraft/world/entity/Entity;m_5844_()V",
+        "playStepSound": "Lnet/minecraft/world/entity/Entity;m_7355_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+        "setSecondsOnFire": "Lnet/minecraft/world/entity/Entity;m_20254_(I)V",
+        "baseTick": "Lnet/minecraft/world/entity/Entity;m_6075_()V",
+        "Lnet/minecraft/world/level/block/SoundType;getStepSound()Lnet/minecraft/sounds/SoundEvent;": "Lnet/minecraft/world/level/block/SoundType;m_56776_()Lnet/minecraft/sounds/SoundEvent;",
+        "Lnet/minecraft/world/entity/Entity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V": "Lnet/minecraft/world/entity/Entity;m_5496_(Lnet/minecraft/sounds/SoundEvent;FF)V"
+      },
+      "team/lodestar/lodestone/mixin/LevelRendererMixin": {
+        "renderLevel": "Lnet/minecraft/client/renderer/LevelRenderer;m_109599_(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;)V",
+        "Lnet/minecraft/world/level/block/Block;stateById(I)Lnet/minecraft/world/level/block/state/BlockState;": "Lnet/minecraft/world/level/block/Block;m_49803_(I)Lnet/minecraft/world/level/block/state/BlockState;",
+        "Lnet/minecraft/client/multiplayer/ClientLevel;playLocalSound(Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V": "Lnet/minecraft/client/multiplayer/ClientLevel;m_245747_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V",
+        "levelEvent": "Lnet/minecraft/client/renderer/LevelRenderer;m_234304_(ILnet/minecraft/core/BlockPos;I)V",
+        "net.minecraft.client.renderer.PostChain.process(F)V": "Lnet/minecraft/client/renderer/PostChain;m_110023_(F)V"
+      },
+      "team/lodestar/lodestone/mixin/ItemStackMixin": {
+        "getTooltipLines": "Lnet/minecraft/world/item/ItemStack;m_41651_(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;",
+        "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;getOperation()Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;": "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;m_22217_()Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;",
+        "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;getId()Ljava/util/UUID;": "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;m_22209_()Ljava/util/UUID;"
+      },
+      "team/lodestar/lodestone/mixin/CameraMixin": {
+        "setup": "Lnet/minecraft/client/Camera;m_90575_(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/world/entity/Entity;ZZF)V"
+      },
+      "team/lodestar/lodestone/mixin/EffectProgramMixin": {
+        "compileShader": "Lcom/mojang/blaze3d/shaders/EffectProgram;m_166588_(Lcom/mojang/blaze3d/shaders/Program$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;)Lcom/mojang/blaze3d/shaders/EffectProgram;",
+        "Lcom/mojang/blaze3d/shaders/EffectProgram;compileShaderInternal(Lcom/mojang/blaze3d/shaders/Program$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;Lcom/mojang/blaze3d/preprocessor/GlslPreprocessor;)I": "Lcom/mojang/blaze3d/shaders/EffectProgram;m_166612_(Lcom/mojang/blaze3d/shaders/Program$Type;Ljava/lang/String;Ljava/io/InputStream;Ljava/lang/String;Lcom/mojang/blaze3d/preprocessor/GlslPreprocessor;)I"
+      },
+      "team/lodestar/lodestone/mixin/EntityRenderDispatcherMixin": {
+        "Lnet/minecraft/client/renderer/entity/EntityRenderer;render(Lnet/minecraft/world/entity/Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "Lnet/minecraft/client/renderer/entity/EntityRenderer;m_7392_(Lnet/minecraft/world/entity/Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+        "render": "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;m_114384_(Lnet/minecraft/world/entity/Entity;DDDFFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
+      }
+    }
+  }
+}

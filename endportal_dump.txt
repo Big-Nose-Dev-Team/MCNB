@@ -1,0 +1,452 @@
+Classfile /C:/Users/jasie/Desktop/clam/Java/Repositories/MCNB/build/_compileJava_2/net/minecraft/world/level/block/EndPortalBlock.class
+  Last modified 2025/12/27; size 5628 bytes
+  MD5 checksum 8a908d1a2148df6af4aebe8dfff77b86
+  Compiled from "EndPortalBlock.java"
+public class net.minecraft.world.level.block.EndPortalBlock extends net.minecraft.world.level.block.BaseEntityBlock
+  minor version: 0
+  major version: 61
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+    #1 = Methodref          #2.#3         // net/minecraft/world/level/block/BaseEntityBlock."<init>":(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+    #2 = Class              #4            // net/minecraft/world/level/block/BaseEntityBlock
+    #3 = NameAndType        #5:#6         // "<init>":(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+    #4 = Utf8               net/minecraft/world/level/block/BaseEntityBlock
+    #5 = Utf8               <init>
+    #6 = Utf8               (Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+    #7 = Class              #8            // net/minecraft/world/level/block/entity/TheEndPortalBlockEntity
+    #8 = Utf8               net/minecraft/world/level/block/entity/TheEndPortalBlockEntity
+    #9 = Methodref          #7.#10        // net/minecraft/world/level/block/entity/TheEndPortalBlockEntity."<init>":(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+   #10 = NameAndType        #5:#11        // "<init>":(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+   #11 = Utf8               (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+   #12 = Fieldref           #13.#14       // net/minecraft/world/level/block/EndPortalBlock.SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #13 = Class              #15           // net/minecraft/world/level/block/EndPortalBlock
+   #14 = NameAndType        #16:#17       // SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #15 = Utf8               net/minecraft/world/level/block/EndPortalBlock
+   #16 = Utf8               SHAPE
+   #17 = Utf8               Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #18 = Class              #19           // net/minecraft/server/level/ServerLevel
+   #19 = Utf8               net/minecraft/server/level/ServerLevel
+   #20 = Methodref          #21.#22       // net/minecraft/world/entity/Entity.canChangeDimensions:()Z
+   #21 = Class              #23           // net/minecraft/world/entity/Entity
+   #22 = NameAndType        #24:#25       // canChangeDimensions:()Z
+   #23 = Utf8               net/minecraft/world/entity/Entity
+   #24 = Utf8               canChangeDimensions
+   #25 = Utf8               ()Z
+   #26 = Methodref          #21.#27       // net/minecraft/world/entity/Entity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+   #27 = NameAndType        #28:#29       // getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+   #28 = Utf8               getBoundingBox
+   #29 = Utf8               ()Lnet/minecraft/world/phys/AABB;
+   #30 = Methodref          #31.#32       // net/minecraft/core/BlockPos.getX:()I
+   #31 = Class              #33           // net/minecraft/core/BlockPos
+   #32 = NameAndType        #34:#35       // getX:()I
+   #33 = Utf8               net/minecraft/core/BlockPos
+   #34 = Utf8               getX
+   #35 = Utf8               ()I
+   #36 = Methodref          #31.#37       // net/minecraft/core/BlockPos.getY:()I
+   #37 = NameAndType        #38:#35       // getY:()I
+   #38 = Utf8               getY
+   #39 = Methodref          #31.#40       // net/minecraft/core/BlockPos.getZ:()I
+   #40 = NameAndType        #41:#35       // getZ:()I
+   #41 = Utf8               getZ
+   #42 = Methodref          #43.#44       // net/minecraft/world/phys/AABB.move:(DDD)Lnet/minecraft/world/phys/AABB;
+   #43 = Class              #45           // net/minecraft/world/phys/AABB
+   #44 = NameAndType        #46:#47       // move:(DDD)Lnet/minecraft/world/phys/AABB;
+   #45 = Utf8               net/minecraft/world/phys/AABB
+   #46 = Utf8               move
+   #47 = Utf8               (DDD)Lnet/minecraft/world/phys/AABB;
+   #48 = Methodref          #49.#50       // net/minecraft/world/phys/shapes/Shapes.create:(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #49 = Class              #51           // net/minecraft/world/phys/shapes/Shapes
+   #50 = NameAndType        #52:#53       // create:(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #51 = Utf8               net/minecraft/world/phys/shapes/Shapes
+   #52 = Utf8               create
+   #53 = Utf8               (Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #54 = Methodref          #55.#56       // net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #55 = Class              #57           // net/minecraft/world/level/block/state/BlockState
+   #56 = NameAndType        #58:#59       // getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #57 = Utf8               net/minecraft/world/level/block/state/BlockState
+   #58 = Utf8               getShape
+   #59 = Utf8               (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+   #60 = Fieldref           #61.#62       // net/minecraft/world/phys/shapes/BooleanOp.AND:Lnet/minecraft/world/phys/shapes/BooleanOp;
+   #61 = Class              #63           // net/minecraft/world/phys/shapes/BooleanOp
+   #62 = NameAndType        #64:#65       // AND:Lnet/minecraft/world/phys/shapes/BooleanOp;
+   #63 = Utf8               net/minecraft/world/phys/shapes/BooleanOp
+   #64 = Utf8               AND
+   #65 = Utf8               Lnet/minecraft/world/phys/shapes/BooleanOp;
+   #66 = Methodref          #49.#67       // net/minecraft/world/phys/shapes/Shapes.joinIsNotEmpty:(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/BooleanOp;)Z
+   #67 = NameAndType        #68:#69       // joinIsNotEmpty:(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/BooleanOp;)Z
+   #68 = Utf8               joinIsNotEmpty
+   #69 = Utf8               (Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/BooleanOp;)Z
+   #70 = Methodref          #71.#72       // net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+   #71 = Class              #73           // net/minecraft/world/level/Level
+   #72 = NameAndType        #74:#75       // dimension:()Lnet/minecraft/resources/ResourceKey;
+   #73 = Utf8               net/minecraft/world/level/Level
+   #74 = Utf8               dimension
+   #75 = Utf8               ()Lnet/minecraft/resources/ResourceKey;
+   #76 = Fieldref           #71.#77       // net/minecraft/world/level/Level.END:Lnet/minecraft/resources/ResourceKey;
+   #77 = NameAndType        #78:#79       // END:Lnet/minecraft/resources/ResourceKey;
+   #78 = Utf8               END
+   #79 = Utf8               Lnet/minecraft/resources/ResourceKey;
+   #80 = Fieldref           #71.#81       // net/minecraft/world/level/Level.OVERWORLD:Lnet/minecraft/resources/ResourceKey;
+   #81 = NameAndType        #82:#79       // OVERWORLD:Lnet/minecraft/resources/ResourceKey;
+   #82 = Utf8               OVERWORLD
+   #83 = Methodref          #18.#84       // net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;
+   #84 = NameAndType        #85:#86       // getServer:()Lnet/minecraft/server/MinecraftServer;
+   #85 = Utf8               getServer
+   #86 = Utf8               ()Lnet/minecraft/server/MinecraftServer;
+   #87 = Methodref          #88.#89       // net/minecraft/server/MinecraftServer.getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+   #88 = Class              #90           // net/minecraft/server/MinecraftServer
+   #89 = NameAndType        #91:#92       // getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+   #90 = Utf8               net/minecraft/server/MinecraftServer
+   #91 = Utf8               getLevel
+   #92 = Utf8               (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+   #93 = Methodref          #21.#94       // net/minecraft/world/entity/Entity.changeDimension:(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;
+   #94 = NameAndType        #95:#96       // changeDimension:(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;
+   #95 = Utf8               changeDimension
+   #96 = Utf8               (Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;
+   #97 = InterfaceMethodref #98.#99       // net/minecraft/util/RandomSource.nextDouble:()D
+   #98 = Class              #100          // net/minecraft/util/RandomSource
+   #99 = NameAndType        #101:#102     // nextDouble:()D
+  #100 = Utf8               net/minecraft/util/RandomSource
+  #101 = Utf8               nextDouble
+  #102 = Utf8               ()D
+  #103 = Double             0.8d
+  #105 = Fieldref           #106.#107     // net/minecraft/core/particles/ParticleTypes.SMOKE:Lnet/minecraft/core/particles/SimpleParticleType;
+  #106 = Class              #108          // net/minecraft/core/particles/ParticleTypes
+  #107 = NameAndType        #109:#110     // SMOKE:Lnet/minecraft/core/particles/SimpleParticleType;
+  #108 = Utf8               net/minecraft/core/particles/ParticleTypes
+  #109 = Utf8               SMOKE
+  #110 = Utf8               Lnet/minecraft/core/particles/SimpleParticleType;
+  #111 = Methodref          #71.#112      // net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+  #112 = NameAndType        #113:#114     // addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+  #113 = Utf8               addParticle
+  #114 = Utf8               (Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+  #115 = Fieldref           #116.#117     // net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+  #116 = Class              #118          // net/minecraft/world/item/ItemStack
+  #117 = NameAndType        #119:#120     // EMPTY:Lnet/minecraft/world/item/ItemStack;
+  #118 = Utf8               net/minecraft/world/item/ItemStack
+  #119 = Utf8               EMPTY
+  #120 = Utf8               Lnet/minecraft/world/item/ItemStack;
+  #121 = Double             6.0d
+  #123 = Double             16.0d
+  #125 = Double             12.0d
+  #127 = Methodref          #128.#129     // net/minecraft/world/level/block/Block.box:(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+  #128 = Class              #130          // net/minecraft/world/level/block/Block
+  #129 = NameAndType        #131:#132     // box:(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+  #130 = Utf8               net/minecraft/world/level/block/Block
+  #131 = Utf8               box
+  #132 = Utf8               (DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+  #133 = Utf8               Code
+  #134 = Utf8               LineNumberTable
+  #135 = Utf8               LocalVariableTable
+  #136 = Utf8               this
+  #137 = Utf8               Lnet/minecraft/world/level/block/EndPortalBlock;
+  #138 = Utf8               p_53017_
+  #139 = Utf8               Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+  #140 = Utf8               newBlockEntity
+  #141 = Utf8               (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+  #142 = Utf8               p_153196_
+  #143 = Utf8               Lnet/minecraft/core/BlockPos;
+  #144 = Utf8               p_153197_
+  #145 = Utf8               Lnet/minecraft/world/level/block/state/BlockState;
+  #146 = Utf8               (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+  #147 = Utf8               p_53038_
+  #148 = Utf8               p_53039_
+  #149 = Utf8               Lnet/minecraft/world/level/BlockGetter;
+  #150 = Utf8               p_53040_
+  #151 = Utf8               p_53041_
+  #152 = Utf8               Lnet/minecraft/world/phys/shapes/CollisionContext;
+  #153 = Utf8               entityInside
+  #154 = Utf8               (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V
+  #155 = Utf8               resourcekey
+  #156 = Utf8               serverlevel
+  #157 = Utf8               Lnet/minecraft/server/level/ServerLevel;
+  #158 = Utf8               p_53025_
+  #159 = Utf8               p_53026_
+  #160 = Utf8               Lnet/minecraft/world/level/Level;
+  #161 = Utf8               p_53027_
+  #162 = Utf8               p_53028_
+  #163 = Utf8               Lnet/minecraft/world/entity/Entity;
+  #164 = Utf8               LocalVariableTypeTable
+  #165 = Utf8               Lnet/minecraft/resources/ResourceKey<Lnet/minecraft/world/level/Level;>;
+  #166 = Utf8               StackMapTable
+  #167 = Class              #168          // net/minecraft/resources/ResourceKey
+  #168 = Utf8               net/minecraft/resources/ResourceKey
+  #169 = Utf8               animateTick
+  #170 = Utf8               (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
+  #171 = Utf8               p_221102_
+  #172 = Utf8               p_221103_
+  #173 = Utf8               p_221104_
+  #174 = Utf8               p_221105_
+  #175 = Utf8               Lnet/minecraft/util/RandomSource;
+  #176 = Utf8               d0
+  #177 = Utf8               D
+  #178 = Utf8               d1
+  #179 = Utf8               d2
+  #180 = Utf8               getCloneItemStack
+  #181 = Utf8               (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/item/ItemStack;
+  #182 = Utf8               p_53021_
+  #183 = Utf8               p_53022_
+  #184 = Utf8               p_53023_
+  #185 = Utf8               canBeReplaced
+  #186 = Utf8               (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
+  #187 = Utf8               p_53035_
+  #188 = Utf8               p_53036_
+  #189 = Utf8               Lnet/minecraft/world/level/material/Fluid;
+  #190 = Utf8               <clinit>
+  #191 = Utf8               ()V
+  #192 = Utf8               SourceFile
+  #193 = Utf8               EndPortalBlock.java
+  #194 = Utf8               InnerClasses
+  #195 = Class              #196          // net/minecraft/world/level/block/state/BlockBehaviour$Properties
+  #196 = Utf8               net/minecraft/world/level/block/state/BlockBehaviour$Properties
+  #197 = Class              #198          // net/minecraft/world/level/block/state/BlockBehaviour
+  #198 = Utf8               net/minecraft/world/level/block/state/BlockBehaviour
+  #199 = Utf8               Properties
+{
+  protected static final net.minecraft.world.phys.shapes.VoxelShape SHAPE;
+    descriptor: Lnet/minecraft/world/phys/shapes/VoxelShape;
+    flags: ACC_PROTECTED, ACC_STATIC, ACC_FINAL
+
+  public net.minecraft.world.level.block.EndPortalBlock(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+    descriptor: (Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: invokespecial #1                  // Method net/minecraft/world/level/block/BaseEntityBlock."<init>":(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+         5: return
+      LineNumberTable:
+        line 26: 0
+        line 27: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0       6     1 p_53017_   Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+
+  public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    descriptor: (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+    flags: ACC_PUBLIC
+    Code:
+      stack=4, locals=3, args_size=3
+         0: new           #7                  // class net/minecraft/world/level/block/entity/TheEndPortalBlockEntity
+         3: dup
+         4: aload_1
+         5: aload_2
+         6: invokespecial #9                  // Method net/minecraft/world/level/block/entity/TheEndPortalBlockEntity."<init>":(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+         9: areturn
+      LineNumberTable:
+        line 30: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      10     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0      10     1 p_153196_   Lnet/minecraft/core/BlockPos;
+            0      10     2 p_153197_   Lnet/minecraft/world/level/block/state/BlockState;
+
+  public net.minecraft.world.phys.shapes.VoxelShape getShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+    descriptor: (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=5, args_size=5
+         0: getstatic     #12                 // Field SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+         3: areturn
+      LineNumberTable:
+        line 34: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       4     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0       4     1 p_53038_   Lnet/minecraft/world/level/block/state/BlockState;
+            0       4     2 p_53039_   Lnet/minecraft/world/level/BlockGetter;
+            0       4     3 p_53040_   Lnet/minecraft/core/BlockPos;
+            0       4     4 p_53041_   Lnet/minecraft/world/phys/shapes/CollisionContext;
+
+  public void entityInside(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+    descriptor: (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V
+    flags: ACC_PUBLIC
+    Code:
+      stack=7, locals=7, args_size=5
+         0: aload_2
+         1: instanceof    #18                 // class net/minecraft/server/level/ServerLevel
+         4: ifeq          108
+         7: aload         4
+         9: invokevirtual #20                 // Method net/minecraft/world/entity/Entity.canChangeDimensions:()Z
+        12: ifeq          108
+        15: aload         4
+        17: invokevirtual #26                 // Method net/minecraft/world/entity/Entity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        20: aload_3
+        21: invokevirtual #30                 // Method net/minecraft/core/BlockPos.getX:()I
+        24: ineg
+        25: i2d
+        26: aload_3
+        27: invokevirtual #36                 // Method net/minecraft/core/BlockPos.getY:()I
+        30: ineg
+        31: i2d
+        32: aload_3
+        33: invokevirtual #39                 // Method net/minecraft/core/BlockPos.getZ:()I
+        36: ineg
+        37: i2d
+        38: invokevirtual #42                 // Method net/minecraft/world/phys/AABB.move:(DDD)Lnet/minecraft/world/phys/AABB;
+        41: invokestatic  #48                 // Method net/minecraft/world/phys/shapes/Shapes.create:(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        44: aload_1
+        45: aload_2
+        46: aload_3
+        47: invokevirtual #54                 // Method net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        50: getstatic     #60                 // Field net/minecraft/world/phys/shapes/BooleanOp.AND:Lnet/minecraft/world/phys/shapes/BooleanOp;
+        53: invokestatic  #66                 // Method net/minecraft/world/phys/shapes/Shapes.joinIsNotEmpty:(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/BooleanOp;)Z
+        56: ifeq          108
+        59: aload_2
+        60: invokevirtual #70                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+        63: getstatic     #76                 // Field net/minecraft/world/level/Level.END:Lnet/minecraft/resources/ResourceKey;
+        66: if_acmpne     75
+        69: getstatic     #80                 // Field net/minecraft/world/level/Level.OVERWORLD:Lnet/minecraft/resources/ResourceKey;
+        72: goto          78
+        75: getstatic     #76                 // Field net/minecraft/world/level/Level.END:Lnet/minecraft/resources/ResourceKey;
+        78: astore        5
+        80: aload_2
+        81: checkcast     #18                 // class net/minecraft/server/level/ServerLevel
+        84: invokevirtual #83                 // Method net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;
+        87: aload         5
+        89: invokevirtual #87                 // Method net/minecraft/server/MinecraftServer.getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+        92: astore        6
+        94: aload         6
+        96: ifnonnull     100
+        99: return
+       100: aload         4
+       102: aload         6
+       104: invokevirtual #93                 // Method net/minecraft/world/entity/Entity.changeDimension:(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;
+       107: pop
+       108: return
+      LineNumberTable:
+        line 38: 0
+        line 39: 59
+        line 40: 80
+        line 41: 94
+        line 42: 99
+        line 45: 100
+        line 48: 108
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+           80      28     5 resourcekey   Lnet/minecraft/resources/ResourceKey;
+           94      14     6 serverlevel   Lnet/minecraft/server/level/ServerLevel;
+            0     109     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0     109     1 p_53025_   Lnet/minecraft/world/level/block/state/BlockState;
+            0     109     2 p_53026_   Lnet/minecraft/world/level/Level;
+            0     109     3 p_53027_   Lnet/minecraft/core/BlockPos;
+            0     109     4 p_53028_   Lnet/minecraft/world/entity/Entity;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+           80      28     5 resourcekey   Lnet/minecraft/resources/ResourceKey<Lnet/minecraft/world/level/Level;>;
+      StackMapTable: number_of_entries = 4
+        frame_type = 251 /* same_frame_extended */
+          offset_delta = 75
+        frame_type = 66 /* same_locals_1_stack_item */
+          stack = [ class net/minecraft/resources/ResourceKey ]
+        frame_type = 253 /* append */
+          offset_delta = 21
+          locals = [ class net/minecraft/resources/ResourceKey, class net/minecraft/server/level/ServerLevel ]
+        frame_type = 249 /* chop */
+          offset_delta = 7
+
+  public void animateTick(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+    descriptor: (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
+    flags: ACC_PUBLIC
+    Code:
+      stack=14, locals=11, args_size=5
+         0: aload_3
+         1: invokevirtual #30                 // Method net/minecraft/core/BlockPos.getX:()I
+         4: i2d
+         5: aload         4
+         7: invokeinterface #97,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+        12: dadd
+        13: dstore        5
+        15: aload_3
+        16: invokevirtual #36                 // Method net/minecraft/core/BlockPos.getY:()I
+        19: i2d
+        20: ldc2_w        #103                // double 0.8d
+        23: dadd
+        24: dstore        7
+        26: aload_3
+        27: invokevirtual #39                 // Method net/minecraft/core/BlockPos.getZ:()I
+        30: i2d
+        31: aload         4
+        33: invokeinterface #97,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+        38: dadd
+        39: dstore        9
+        41: aload_2
+        42: getstatic     #105                // Field net/minecraft/core/particles/ParticleTypes.SMOKE:Lnet/minecraft/core/particles/SimpleParticleType;
+        45: dload         5
+        47: dload         7
+        49: dload         9
+        51: dconst_0
+        52: dconst_0
+        53: dconst_0
+        54: invokevirtual #111                // Method net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+        57: return
+      LineNumberTable:
+        line 51: 0
+        line 52: 15
+        line 53: 26
+        line 54: 41
+        line 55: 57
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      58     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0      58     1 p_221102_   Lnet/minecraft/world/level/block/state/BlockState;
+            0      58     2 p_221103_   Lnet/minecraft/world/level/Level;
+            0      58     3 p_221104_   Lnet/minecraft/core/BlockPos;
+            0      58     4 p_221105_   Lnet/minecraft/util/RandomSource;
+           15      43     5    d0   D
+           26      32     7    d1   D
+           41      17     9    d2   D
+
+  public net.minecraft.world.item.ItemStack getCloneItemStack(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    descriptor: (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/item/ItemStack;
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=4, args_size=4
+         0: getstatic     #115                // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+         3: areturn
+      LineNumberTable:
+        line 58: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       4     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0       4     1 p_53021_   Lnet/minecraft/world/level/BlockGetter;
+            0       4     2 p_53022_   Lnet/minecraft/core/BlockPos;
+            0       4     3 p_53023_   Lnet/minecraft/world/level/block/state/BlockState;
+
+  public boolean canBeReplaced(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.Fluid);
+    descriptor: (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=3, args_size=3
+         0: iconst_0
+         1: ireturn
+      LineNumberTable:
+        line 62: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       2     0  this   Lnet/minecraft/world/level/block/EndPortalBlock;
+            0       2     1 p_53035_   Lnet/minecraft/world/level/block/state/BlockState;
+            0       2     2 p_53036_   Lnet/minecraft/world/level/material/Fluid;
+
+  static {};
+    descriptor: ()V
+    flags: ACC_STATIC
+    Code:
+      stack=12, locals=0, args_size=0
+         0: dconst_0
+         1: ldc2_w        #121                // double 6.0d
+         4: dconst_0
+         5: ldc2_w        #123                // double 16.0d
+         8: ldc2_w        #125                // double 12.0d
+        11: ldc2_w        #123                // double 16.0d
+        14: invokestatic  #127                // Method net/minecraft/world/level/block/Block.box:(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        17: putstatic     #12                 // Field SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        20: return
+      LineNumberTable:
+        line 23: 0
+}
+SourceFile: "EndPortalBlock.java"
+InnerClasses:
+     public static #199= #195 of #197; //Properties=class net/minecraft/world/level/block/state/BlockBehaviour$Properties of class net/minecraft/world/level/block/state/BlockBehaviour
