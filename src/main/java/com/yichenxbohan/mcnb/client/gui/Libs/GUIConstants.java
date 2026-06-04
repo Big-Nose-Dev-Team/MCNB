@@ -1,4 +1,4 @@
-package com.yichenxbohan.mcnb.client.gui;
+package com.yichenxbohan.mcnb.client.gui.Libs;
 
 public class GUIConstants {
     // 顏色

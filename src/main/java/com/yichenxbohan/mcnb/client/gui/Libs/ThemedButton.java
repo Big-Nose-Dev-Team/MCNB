@@ -1,6 +1,5 @@
-package com.yichenxbohan.mcnb.client.gui;
+package com.yichenxbohan.mcnb.client.gui.Libs;
 
-import com.yichenxbohan.mcnb.client.gui.UITheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

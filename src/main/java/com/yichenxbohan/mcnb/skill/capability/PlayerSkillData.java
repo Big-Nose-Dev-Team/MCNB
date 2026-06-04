@@ -9,7 +9,7 @@ import java.util.Map;
 public class PlayerSkillData implements IPlayerSkillData {
 
     private final Map<String, Integer> levels = new HashMap<>();
-    private final Map<String, String> branches = new HashMap<>();
+    private final Map<String, Long> cooldownEndTicks = new HashMap<>();
     private boolean dirty;
 
     @Override
@@ -25,7 +25,7 @@ public class PlayerSkillData implements IPlayerSkillData {
         int clamped = Math.max(0, level);
         if (clamped == 0) {
             levels.remove(skillId);
-            branches.remove(skillId);
+            cooldownEndTicks.remove(skillId);
         } else {
             levels.put(skillId, clamped);
         }
@@ -33,27 +33,35 @@ public class PlayerSkillData implements IPlayerSkillData {
     }
 
     @Override
-    public String getSelectedBranch(String skillId) {
-        return branches.get(skillId);
+    public long getSkillCooldownEndTick(String skillId) {
+        return Math.max(0L, cooldownEndTicks.getOrDefault(skillId, 0L));
     }
 
     @Override
-    public void setSelectedBranch(String skillId, String branchId) {
+    public void setSkillCooldownEndTick(String skillId, long gameTick) {
         if (skillId == null || skillId.isEmpty()) {
             return;
         }
-        if (branchId == null || branchId.isEmpty()) {
-            branches.remove(skillId);
+        long clamped = Math.max(0L, gameTick);
+        if (clamped == 0L) {
+            cooldownEndTicks.remove(skillId);
         } else {
-            branches.put(skillId, branchId);
+            cooldownEndTicks.put(skillId, clamped);
         }
         markDirty();
     }
 
     @Override
+    public int getRemainingCooldownTicks(String skillId, long currentGameTick) {
+        long endTick = getSkillCooldownEndTick(skillId);
+        long remain = endTick - Math.max(0L, currentGameTick);
+        return (int) Math.max(0L, Math.min(Integer.MAX_VALUE, remain));
+    }
+
+    @Override
     public boolean removeSkill(String skillId) {
         boolean changed = levels.remove(skillId) != null;
-        changed |= branches.remove(skillId) != null;
+        changed |= cooldownEndTicks.remove(skillId) != null;
         if (changed) {
             markDirty();
         }
@@ -62,11 +70,11 @@ public class PlayerSkillData implements IPlayerSkillData {
 
     @Override
     public boolean resetAll() {
-        if (levels.isEmpty() && branches.isEmpty()) {
+        if (levels.isEmpty() && cooldownEndTicks.isEmpty()) {
             return false;
         }
         levels.clear();
-        branches.clear();
+        cooldownEndTicks.clear();
         markDirty();
         return true;
     }
@@ -96,22 +104,22 @@ public class PlayerSkillData implements IPlayerSkillData {
     }
 
     @Override
-    public Map<String, String> getSelectedBranches() {
-        return Collections.unmodifiableMap(branches);
+    public Map<String, Long> getSkillCooldowns() {
+        return Collections.unmodifiableMap(cooldownEndTicks);
     }
 
     @Override
-    public void overwriteFrom(Map<String, Integer> newLevels, Map<String, String> newBranches) {
+    public void overwriteFrom(Map<String, Integer> newLevels, Map<String, Long> newCooldowns) {
         levels.clear();
-        branches.clear();
+        cooldownEndTicks.clear();
         for (Map.Entry<String, Integer> entry : newLevels.entrySet()) {
             if (entry.getKey() != null && !entry.getKey().isEmpty() && entry.getValue() != null && entry.getValue() > 0) {
                 levels.put(entry.getKey(), entry.getValue());
             }
         }
-        for (Map.Entry<String, String> entry : newBranches.entrySet()) {
-            if (entry.getKey() != null && !entry.getKey().isEmpty() && entry.getValue() != null && !entry.getValue().isEmpty()) {
-                branches.put(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, Long> entry : newCooldowns.entrySet()) {
+            if (entry.getKey() != null && !entry.getKey().isEmpty() && entry.getValue() != null && entry.getValue() > 0L) {
+                cooldownEndTicks.put(entry.getKey(), entry.getValue());
             }
         }
         markDirty();
@@ -135,25 +143,23 @@ public class PlayerSkillData implements IPlayerSkillData {
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         CompoundTag levelTag = new CompoundTag();
-        CompoundTag branchTag = new CompoundTag();
+        CompoundTag cooldownTag = new CompoundTag();
 
         for (Map.Entry<String, Integer> entry : levels.entrySet()) {
             levelTag.putInt(entry.getKey(), Math.max(0, entry.getValue()));
         }
-        for (Map.Entry<String, String> entry : branches.entrySet()) {
-            if (entry.getValue() != null) {
-                branchTag.putString(entry.getKey(), entry.getValue());
-            }
+        for (Map.Entry<String, Long> entry : cooldownEndTicks.entrySet()) {
+            cooldownTag.putLong(entry.getKey(), Math.max(0L, entry.getValue()));
         }
 
         tag.put("skillLevels", levelTag);
-        tag.put("skillBranches", branchTag);
+        tag.put("skillCooldownEndTicks", cooldownTag);
         return tag;
     }
 
     public void deserializeNBT(CompoundTag tag) {
         levels.clear();
-        branches.clear();
+        cooldownEndTicks.clear();
 
         if (tag.contains("skillLevels")) {
             CompoundTag levelTag = tag.getCompound("skillLevels");
@@ -162,11 +168,16 @@ public class PlayerSkillData implements IPlayerSkillData {
             }
         }
 
-        if (tag.contains("skillBranches")) {
-            CompoundTag branchTag = tag.getCompound("skillBranches");
-            for (String key : branchTag.getAllKeys()) {
-                branches.put(key, branchTag.getString(key));
+        if (tag.contains("skillCooldownEndTicks")) {
+            CompoundTag cooldownTag = tag.getCompound("skillCooldownEndTicks");
+            for (String key : cooldownTag.getAllKeys()) {
+                cooldownEndTicks.put(key, Math.max(0L, cooldownTag.getLong(key)));
             }
+        }
+
+        // Legacy compatibility: drop old branch data key if it exists in old saves.
+        if (tag.contains("skillBranches")) {
+            markDirty();
         }
     }
 }

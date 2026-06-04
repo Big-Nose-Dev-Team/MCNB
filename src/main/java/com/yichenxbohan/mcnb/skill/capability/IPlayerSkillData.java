@@ -9,9 +9,11 @@ public interface IPlayerSkillData {
 
     void setSkillLevel(String skillId, int level);
 
-    String getSelectedBranch(String skillId);
+    long getSkillCooldownEndTick(String skillId);
 
-    void setSelectedBranch(String skillId, String branchId);
+    void setSkillCooldownEndTick(String skillId, long gameTick);
+
+    int getRemainingCooldownTicks(String skillId, long currentGameTick);
 
     boolean removeSkill(String skillId);
 
@@ -25,9 +27,9 @@ public interface IPlayerSkillData {
 
     Map<String, Integer> getSkillLevels();
 
-    Map<String, String> getSelectedBranches();
+    Map<String, Long> getSkillCooldowns();
 
-    void overwriteFrom(Map<String, Integer> levels, Map<String, String> branches);
+    void overwriteFrom(Map<String, Integer> levels, Map<String, Long> cooldowns);
 
     void markDirty();
 

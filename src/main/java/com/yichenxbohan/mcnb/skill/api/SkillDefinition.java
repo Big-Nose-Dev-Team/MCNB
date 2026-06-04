@@ -24,8 +24,8 @@ public class SkillDefinition {
     private final int durationPerLevel;
     private final double physicalScaling;
     private final double magicScaling;
+    private final int cooldownTicks;
     private final List<SkillPrerequisite> prerequisites;
-    private final List<SkillBranch> branches;
     private final SkillExecutor customExecutor;
 
     private SkillDefinition(Builder builder) {
@@ -43,8 +43,8 @@ public class SkillDefinition {
         this.durationPerLevel = builder.durationPerLevel;
         this.physicalScaling = builder.physicalScaling;
         this.magicScaling = builder.magicScaling;
+        this.cooldownTicks = builder.cooldownTicks;
         this.prerequisites = Collections.unmodifiableList(new ArrayList<>(builder.prerequisites));
-        this.branches = Collections.unmodifiableList(new ArrayList<>(builder.branches));
         this.customExecutor = builder.customExecutor;
     }
 
@@ -118,12 +118,12 @@ public class SkillDefinition {
         return magicScaling;
     }
 
-    public List<SkillPrerequisite> getPrerequisites() {
-        return prerequisites;
+    public int getCooldownTicks() {
+        return cooldownTicks;
     }
 
-    public List<SkillBranch> getBranches() {
-        return branches;
+    public List<SkillPrerequisite> getPrerequisites() {
+        return prerequisites;
     }
 
     public SkillExecutor getCustomExecutor() {
@@ -138,15 +138,6 @@ public class SkillDefinition {
     public int getDurationAtLevel(int level) {
         int lv = Math.max(1, Math.min(maxLevel, level));
         return baseDurationTicks + (lv - 1) * durationPerLevel;
-    }
-
-    public SkillBranch findBranch(String branchId) {
-        for (SkillBranch branch : branches) {
-            if (branch.getId().equals(branchId)) {
-                return branch;
-            }
-        }
-        return null;
     }
 
     public static Builder builder(String id, PlayerClass ownerClass) {
@@ -168,8 +159,8 @@ public class SkillDefinition {
         private int durationPerLevel = 10;
         private double physicalScaling = 1.0;
         private double magicScaling = 0.0;
+        private int cooldownTicks = 20;
         private final List<SkillPrerequisite> prerequisites = new ArrayList<>();
-        private final List<SkillBranch> branches = new ArrayList<>();
         private SkillExecutor customExecutor = null;
 
         private Builder(String id, PlayerClass ownerClass) {
@@ -225,13 +216,13 @@ public class SkillDefinition {
             return this;
         }
 
-        public Builder prerequisite(String requiredSkillId, int minLevel) {
-            this.prerequisites.add(new SkillPrerequisite(requiredSkillId, minLevel));
+        public Builder cooldownTicks(int cooldownTicks) {
+            this.cooldownTicks = Math.max(0, cooldownTicks);
             return this;
         }
 
-        public Builder branch(SkillBranch branch) {
-            this.branches.add(branch);
+        public Builder prerequisite(String requiredSkillId, int minLevel) {
+            this.prerequisites.add(new SkillPrerequisite(requiredSkillId, minLevel));
             return this;
         }
 

@@ -18,11 +18,11 @@ import java.util.function.Supplier;
 public class SkillSyncPacket {
 
     private final Map<String, Integer> levels;
-    private final Map<String, String> branches;
+    private final Map<String, Long> cooldowns;
 
-    public SkillSyncPacket(Map<String, Integer> levels, Map<String, String> branches) {
+    public SkillSyncPacket(Map<String, Integer> levels, Map<String, Long> cooldowns) {
         this.levels = new HashMap<>(levels);
-        this.branches = new HashMap<>(branches);
+        this.cooldowns = new HashMap<>(cooldowns);
     }
 
     public SkillSyncPacket(FriendlyByteBuf buf) {
@@ -34,12 +34,12 @@ public class SkillSyncPacket {
             levels.put(key, value);
         }
 
-        int branchSize = buf.readVarInt();
-        this.branches = new HashMap<>();
-        for (int i = 0; i < branchSize; i++) {
+        int cooldownSize = buf.readVarInt();
+        this.cooldowns = new HashMap<>();
+        for (int i = 0; i < cooldownSize; i++) {
             String key = buf.readUtf(128);
-            String value = buf.readUtf(128);
-            branches.put(key, value);
+            long value = buf.readVarLong();
+            cooldowns.put(key, value);
         }
     }
 
@@ -50,10 +50,10 @@ public class SkillSyncPacket {
             buf.writeVarInt(entry.getValue());
         }
 
-        buf.writeVarInt(branches.size());
-        for (Map.Entry<String, String> entry : branches.entrySet()) {
+        buf.writeVarInt(cooldowns.size());
+        for (Map.Entry<String, Long> entry : cooldowns.entrySet()) {
             buf.writeUtf(entry.getKey());
-            buf.writeUtf(entry.getValue());
+            buf.writeVarLong(entry.getValue());
         }
     }
 
@@ -71,7 +71,7 @@ public class SkillSyncPacket {
             return;
         }
         player.getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(cap -> {
-            cap.overwriteFrom(levels, branches);
+            cap.overwriteFrom(levels, cooldowns);
             cap.clearDirty();
         });
     }

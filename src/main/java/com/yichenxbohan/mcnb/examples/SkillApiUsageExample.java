@@ -4,7 +4,6 @@ import com.yichenxbohan.mcnb.ModCapabilities;
 import com.yichenxbohan.mcnb.level.PlayerAttributeType;
 import com.yichenxbohan.mcnb.playerclass.PlayerClass;
 import com.yichenxbohan.mcnb.skill.SkillService;
-import com.yichenxbohan.mcnb.skill.api.SkillBranch;
 import com.yichenxbohan.mcnb.skill.api.SkillCategory;
 import com.yichenxbohan.mcnb.skill.api.SkillCastType;
 import com.yichenxbohan.mcnb.skill.api.SkillDefinition;
@@ -25,7 +24,7 @@ public final class SkillApiUsageExample {
     }
 
     /**
-     * 範例 1：建立一個技能定義（含職業、分支、倍率、時長）。
+     * 範例 1：建立一個技能定義（含職業、自訂描述、倍率、時長、冷卻）。
      */
     public static SkillDefinition createMageFireballDefinition() {
         return SkillDefinition.builder("mage_fireball", PlayerClass.MAGE)
@@ -37,10 +36,9 @@ public final class SkillApiUsageExample {
                 .maxLevel(10)
                 .multiplier(1.2, 0.18)
                 .duration(20, 4)
+                .cooldownTicks(100)
                 .scaling(0.2, 1.4)
                 .prerequisite("mage_skill_1", 1)
-                .branch(new SkillBranch("burst", "爆裂", "提高瞬間倍率", 0.10, 0, null))
-                .branch(new SkillBranch("burn", "灼燒", "提高效果時長", 0.03, 12, null))
                 .customExecutor(ctx -> {
                     // 在 customExecutor 內，直接從 ctx 取玩家，接著讀 Capability。
                     ServerPlayer self = ctx.getPlayer();
@@ -61,8 +59,16 @@ public final class SkillApiUsageExample {
                             .map(cap -> cap.getSkillLevel("mage_fireball"))
                             .orElse(0);
 
+                    double totalFinal = ctx.getComputedDamage();
+                    double finalPhysical = ctx.getComputedPhysicalDamage();
+                    double finalMagic = ctx.getComputedMagicDamage();
+                    double finalByType = ctx.getComputedDamage(
+                            com.yichenxbohan.mcnb.skill.api.SkillExecutionContext.ComputedDamageType.MAGIC
+                    );
+
                     // 你可以把玩家資料和技能計算值一起用在自訂邏輯：
-                    // ctx.getComputedDamage()、ctx.getComputedDuration()、ctx.getTargetPosition()
+                    // totalFinal / finalPhysical / finalMagic / finalByType
+                    // ctx.getComputedDuration()、ctx.getTargetPosition()
                     // myClass、myLevel、myMagicAttack、myFireballLv
                 })
                 .build();
@@ -87,10 +93,9 @@ public final class SkillApiUsageExample {
      */
     public static void serverSideFlow(ServerPlayer player, String skillId) {
         boolean upgraded = SkillService.upgradeSkill(player, skillId);
-        boolean selected = SkillService.selectBranch(player, skillId, "burst");
         boolean casted = SkillService.castSkill(player, skillId);
 
-        if (upgraded || selected || casted) {
+        if (upgraded || casted) {
             SkillService.syncToClient(player);
         }
     }

@@ -2,7 +2,6 @@ package com.yichenxbohan.mcnb.skill.api;
 
 import com.yichenxbohan.mcnb.playerclass.PlayerClass;
 import com.yichenxbohan.mcnb.skill.SoulBowSkill;
-import com.yichenxbohan.mcnb.skill.skills.cultivator.SwordEnergy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +13,7 @@ import java.util.Map;
 /**
  * 技能註冊中心：
  * - 每個職業預設 5 個技能
- * - 每個技能可帶前置與分支資料
+ * - 每個技能可帶前置、描述與冷卻資料
  */
 public final class SkillRegistry {
 
@@ -41,7 +40,6 @@ public final class SkillRegistry {
         List<SkillDefinition> defs = new ArrayList<>();
 
         switch (clazz) {
-            case CULTIVATOR -> registerCultivatorSkills(defs);
             case ARCHER -> registerArcherSkills(defs);
             default -> registerGenericFiveSkills(defs, clazz);
         }
@@ -49,22 +47,11 @@ public final class SkillRegistry {
         CLASS_SKILLS.put(clazz, Collections.unmodifiableList(defs));
     }
 
-    private static void registerCultivatorSkills(List<SkillDefinition> defs) {
-        SkillDefinition swordEnergy = SwordEnergy.SwordEnergy();
-        register(defs, swordEnergy);
-
-        String previousId = swordEnergy.getId();
-        for (int i = 2; i <= 5; i++) {
-            SkillDefinition generic = buildGenericSkill(PlayerClass.CULTIVATOR, i, previousId);
-            register(defs, generic);
-            previousId = generic.getId();
-        }
-    }
 
     private static void registerArcherSkills(List<SkillDefinition> defs) {
         SkillDefinition soulBow = SkillDefinition.builder("archer_skill_1", PlayerClass.ARCHER)
                 .displayName(PlayerClass.ARCHER.displayName + "技能 1")
-                .description("可於此技能樹延伸不同強化方向。")
+                .description("召喚靈魂箭強化你的下一發箭矢，命中時造成額外靈魂傷害。")
                 .category(SkillCategory.ATTACK)
                 .castType(SkillCastType.REQUIRES_BOW_DRAW)
                 .aimType(SkillAimType.LOOK_TARGET_BLOCK)
@@ -72,8 +59,7 @@ public final class SkillRegistry {
                 .multiplier(1.1, 0.12)
                 .duration(50, 6)
                 .scaling(1.1, 0.6)
-                .branch(new SkillBranch("power", "破壞", "強化技能倍率", 0.08, 0, null))
-                .branch(new SkillBranch("control", "控制", "強化持續與輔助", 0.02, 12, null))
+                .cooldownTicks(80)
                 .customExecutor(ctx -> SoulBowSkill.activate(ctx.getPlayer()))
                 .build();
         register(defs, soulBow);
@@ -101,7 +87,7 @@ public final class SkillRegistry {
 
         SkillDefinition.Builder builder = SkillDefinition.builder(id, clazz)
                 .displayName(clazz.displayName + "技能 " + index)
-                .description("可於此技能樹延伸不同強化方向。")
+                .description("這是「" + clazz.displayName + "技能 " + index + "」的自訂技能描述。")
                 .category(index % 2 == 0 ? SkillCategory.BUFF : SkillCategory.ATTACK)
                 .castType(SkillCastType.INSTANT)
                 .aimType(index % 2 == 0 ? SkillAimType.SELF : SkillAimType.LOOK_TARGET_BLOCK)
@@ -109,8 +95,7 @@ public final class SkillRegistry {
                 .multiplier(1.0 + index * 0.1, 0.12)
                 .duration(40 + index * 10, 6)
                 .scaling(index % 2 == 0 ? 0.3 : 1.1, index % 2 == 0 ? 0.9 : 0.6)
-                .branch(new SkillBranch("power", "破壞", "強化技能倍率", 0.08, 0, null))
-                .branch(new SkillBranch("control", "控制", "強化持續與輔助", 0.02, 12, null));
+                .cooldownTicks(60 + index * 10);
 
         if (prerequisiteSkillId != null && !prerequisiteSkillId.isEmpty()) {
             builder.prerequisite(prerequisiteSkillId, 1);

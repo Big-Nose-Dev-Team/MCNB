@@ -1,4 +1,4 @@
-package com.yichenxbohan.mcnb.client.gui;
+package com.yichenxbohan.mcnb.client.gui.Libs;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -62,6 +62,21 @@ public class ScrollVBox extends AbstractWidget {
         return widget;
     }
 
+    /** Removes all rows so caller can rebuild UI in-place. */
+    public void clearChildren() {
+        children.clear();
+        contentHeight = 0;
+        scrollY = 0;
+    }
+
+    public double getScrollY() {
+        return scrollY;
+    }
+
+    public void setScrollY(double scrollY) {
+        this.scrollY = Mth.clamp(scrollY, 0, getMaxScroll());
+    }
+
     private int getViewportHeight() {
         return Math.max(0, (height - contentPadding * 2));
     }
@@ -117,6 +132,27 @@ public class ScrollVBox extends AbstractWidget {
         if (!isMouseOver(mx, my)) return false;
         scrollY = Mth.clamp(scrollY - (delta * 14), 0, getMaxScroll());
         return true;
+    }
+
+    @Override
+    public boolean mouseClicked(double mx, double my, int button) {
+        if (!isMouseOver(mx, my)) {
+            return false;
+        }
+
+        int clipTop = getContentTopY();
+        int clipBottom = getContentBottomY();
+        if (my < clipTop || my >= clipBottom) {
+            return false;
+        }
+
+        double adjustedY = my + scrollY;
+        for (AbstractWidget child : children) {
+            if (child.mouseClicked(mx, adjustedY, button)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

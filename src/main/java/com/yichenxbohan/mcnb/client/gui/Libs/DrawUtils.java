@@ -1,4 +1,4 @@
-package com.yichenxbohan.mcnb.client.gui;
+package com.yichenxbohan.mcnb.client.gui.Libs;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

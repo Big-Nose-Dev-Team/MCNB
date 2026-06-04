@@ -7,27 +7,36 @@ import net.minecraft.world.phys.Vec3;
  * 技能執行時上下文。
  */
 public class SkillExecutionContext {
+    public enum ComputedDamageType {
+        PHYSICAL,
+        MAGIC,
+        TOTAL
+    }
+
     private final ServerPlayer player;
     private final SkillDefinition skill;
     private final int level;
-    private final SkillBranch selectedBranch;
     private final Vec3 targetPosition;
     private final double computedDamage;
+    private final double computedPhysicalDamage;
+    private final double computedMagicDamage;
     private final int computedDuration;
 
     public SkillExecutionContext(ServerPlayer player,
                                  SkillDefinition skill,
                                  int level,
-                                 SkillBranch selectedBranch,
                                  Vec3 targetPosition,
                                  double computedDamage,
+                                 double computedPhysicalDamage,
+                                 double computedMagicDamage,
                                  int computedDuration) {
         this.player = player;
         this.skill = skill;
         this.level = level;
-        this.selectedBranch = selectedBranch;
         this.targetPosition = targetPosition;
         this.computedDamage = computedDamage;
+        this.computedPhysicalDamage = computedPhysicalDamage;
+        this.computedMagicDamage = computedMagicDamage;
         this.computedDuration = computedDuration;
     }
 
@@ -43,9 +52,6 @@ public class SkillExecutionContext {
         return level;
     }
 
-    public SkillBranch getSelectedBranch() {
-        return selectedBranch;
-    }
 
     public Vec3 getTargetPosition() {
         return targetPosition;
@@ -53,6 +59,22 @@ public class SkillExecutionContext {
 
     public double getComputedDamage() {
         return computedDamage;
+    }
+
+    public double getComputedPhysicalDamage() {
+        return computedPhysicalDamage;
+    }
+
+    public double getComputedMagicDamage() {
+        return computedMagicDamage;
+    }
+
+    public double getComputedDamage(ComputedDamageType type) {
+        return switch (type) {
+            case PHYSICAL -> computedPhysicalDamage;
+            case MAGIC -> computedMagicDamage;
+            case TOTAL -> computedDamage;
+        };
     }
 
     public int getComputedDuration() {

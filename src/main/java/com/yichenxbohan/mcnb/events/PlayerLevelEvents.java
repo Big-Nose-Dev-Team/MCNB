@@ -102,7 +102,7 @@ public class PlayerLevelEvents {
 
             event.getOriginal().getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(oldSkill ->
                     event.getEntity().getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(newSkill ->
-                            newSkill.overwriteFrom(oldSkill.getSkillLevels(), oldSkill.getSelectedBranches())
+                            newSkill.overwriteFrom(oldSkill.getSkillLevels(), oldSkill.getSkillCooldowns())
                     )
             );
             event.getOriginal().invalidateCaps();

@@ -8,30 +8,26 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 /**
- * C2S 技能操作封包，由 API 統一處理升級/分支/施放。
+ * C2S 技能操作封包，由 API 統一處理升級/施放/重置。
  */
 public class SkillActionPacket {
 
     private final SkillActionType action;
     private final String skillId;
-    private final String branchId;
 
-    public SkillActionPacket(SkillActionType action, String skillId, String branchId) {
+    public SkillActionPacket(SkillActionType action, String skillId) {
         this.action = action;
         this.skillId = skillId == null ? "" : skillId;
-        this.branchId = branchId == null ? "" : branchId;
     }
 
     public SkillActionPacket(FriendlyByteBuf buf) {
         this.action = buf.readEnum(SkillActionType.class);
         this.skillId = buf.readUtf(128);
-        this.branchId = buf.readUtf(128);
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeEnum(action);
         buf.writeUtf(skillId);
-        buf.writeUtf(branchId);
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
@@ -43,7 +39,6 @@ public class SkillActionPacket {
 
             boolean changed = switch (action) {
                 case UPGRADE -> SkillService.upgradeSkill(player, skillId);
-                case SELECT_BRANCH -> SkillService.selectBranch(player, skillId, branchId);
                 case CAST -> SkillService.castSkill(player, skillId);
                 case RESET -> SkillService.resetAll(player);
             };

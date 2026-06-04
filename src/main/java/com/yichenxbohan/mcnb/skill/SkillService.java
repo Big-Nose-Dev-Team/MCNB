@@ -6,7 +6,6 @@ import com.yichenxbohan.mcnb.combat.damage.DamageAPI;
 import com.yichenxbohan.mcnb.network.ModNetworking;
 import com.yichenxbohan.mcnb.playerclass.PlayerClass;
 import com.yichenxbohan.mcnb.skill.api.SkillAimType;
-import com.yichenxbohan.mcnb.skill.api.SkillBranch;
 import com.yichenxbohan.mcnb.skill.api.SkillCategory;
 import com.yichenxbohan.mcnb.skill.api.SkillDefinition;
 import com.yichenxbohan.mcnb.skill.api.SkillExecutionContext;
@@ -74,32 +73,6 @@ public final class SkillService {
         }).orElse(false);
     }
 
-    public static boolean selectBranch(ServerPlayer player, String skillId, String branchId) {
-        SkillDefinition def = SkillRegistry.getById(skillId);
-        if (def == null || branchId == null || branchId.isEmpty()) {
-            return false;
-        }
-
-        SkillBranch branch = def.findBranch(branchId);
-        if (branch == null) {
-            return false;
-        }
-
-        return player.getCapability(ModCapabilities.PLAYER_SKILL).map(skillData -> {
-            if (skillData.getSkillLevel(skillId) <= 0) {
-                return false;
-            }
-
-            SkillPrerequisite prerequisite = branch.getPrerequisite();
-            if (prerequisite != null && skillData.getSkillLevel(prerequisite.getRequiredSkillId()) < prerequisite.getMinLevel()) {
-                return false;
-            }
-
-            skillData.setSelectedBranch(skillId, branchId);
-            return true;
-        }).orElse(false);
-    }
-
     public static boolean resetAll(ServerPlayer player) {
         return player.getCapability(ModCapabilities.PLAYER_SKILL)
                 .map(IPlayerSkillData::resetAll)
@@ -118,6 +91,12 @@ public final class SkillService {
                 return false;
             }
 
+            int remainingCooldown = skillData.getRemainingCooldownTicks(skillId, player.level().getGameTime());
+            if (remainingCooldown > 0) {
+                player.sendSystemMessage(Component.literal("技能冷卻中: " + (remainingCooldown / 20.0f) + " 秒"));
+                return false;
+            }
+
             if (def.getCastType() == com.yichenxbohan.mcnb.skill.api.SkillCastType.REQUIRES_BOW_DRAW) {
                 if (!player.isUsingItem()) {
                     player.sendSystemMessage(Component.literal("技能需要拉弓中才能施放"));
@@ -128,19 +107,33 @@ public final class SkillService {
                 }
             }
 
-            SkillBranch selectedBranch = def.findBranch(skillData.getSelectedBranch(skillId));
             double base = computeBaseDamage(player, def);
-            double multiplier = def.getMultiplierAtLevel(level) + (selectedBranch == null ? 0.0 : selectedBranch.getMultiplierBonusPerLevel() * level);
-            int duration = def.getDurationAtLevel(level) + (selectedBranch == null ? 0 : selectedBranch.getDurationBonusPerLevel() * level);
+            double multiplier = def.getMultiplierAtLevel(level);
+            int duration = def.getDurationAtLevel(level);
             Vec3 targetPos = findTargetPosition(player, def.getAimType());
             double finalDamage = Math.max(0.0, base * multiplier);
+            double finalPhysicalDamage = Math.max(0.0, StatsProvider.get(player).physicalAttack * def.getPhysicalScaling() * multiplier);
+            double finalMagicDamage = Math.max(0.0, StatsProvider.get(player).magicAttack * def.getMagicScaling() * multiplier);
 
-            SkillExecutionContext ctx = new SkillExecutionContext(player, def, level, selectedBranch, targetPos, finalDamage, duration);
+            SkillExecutionContext ctx = new SkillExecutionContext(
+                    player,
+                    def,
+                    level,
+                    targetPos,
+                    finalDamage,
+                    finalPhysicalDamage,
+                    finalMagicDamage,
+                    duration
+            );
 
             if (def.getCustomExecutor() != null) {
                 def.getCustomExecutor().execute(ctx);
             } else {
                 executeDefault(ctx);
+            }
+
+            if (def.getCooldownTicks() > 0) {
+                skillData.setSkillCooldownEndTick(skillId, player.level().getGameTime() + def.getCooldownTicks());
             }
             return true;
         }).orElse(false);
@@ -195,9 +188,8 @@ public final class SkillService {
             return;
         }
 
-        double totalScaling = Math.max(0.0001, def.getPhysicalScaling() + def.getMagicScaling());
-        float physicalDamage = (float) (ctx.getComputedDamage() * (def.getPhysicalScaling() / totalScaling));
-        float magicDamage = (float) (ctx.getComputedDamage() * (def.getMagicScaling() / totalScaling));
+        float physicalDamage = (float) ctx.getComputedPhysicalDamage();
+        float magicDamage = (float) ctx.getComputedMagicDamage();
 
         for (LivingEntity target : targets) {
             if (!(target instanceof Mob)) {
@@ -215,8 +207,8 @@ public final class SkillService {
     public static void syncToClient(ServerPlayer player) {
         player.getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(data -> {
             Map<String, Integer> levels = data.getSkillLevels();
-            Map<String, String> branches = data.getSelectedBranches();
-            ModNetworking.sendToPlayer(new SkillSyncPacket(levels, branches), player);
+            Map<String, Long> cooldowns = data.getSkillCooldowns();
+            ModNetworking.sendToPlayer(new SkillSyncPacket(levels, cooldowns), player);
             data.clearDirty();
         });
     }
