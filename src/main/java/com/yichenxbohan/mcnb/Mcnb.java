@@ -1,6 +1,7 @@
 package com.yichenxbohan.mcnb;
 
 import com.mojang.logging.LogUtils;
+import com.yichenxbohan.mcnb.entity.ModEntities;
 import com.yichenxbohan.mcnb.items.ModItems;
 import com.yichenxbohan.mcnb.network.ModNetworking;
 import com.yichenxbohan.mcnb.particle.ModParticles;
@@ -62,6 +63,8 @@ public class Mcnb {
         ModSounds.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        // Register ModEntities to the mod event bus
+        ModEntities.register(modEventBus);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);

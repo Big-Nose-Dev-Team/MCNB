@@ -2,6 +2,7 @@ package com.yichenxbohan.mcnb.skill.api;
 
 import com.yichenxbohan.mcnb.playerclass.PlayerClass;
 import com.yichenxbohan.mcnb.skill.SoulBowSkill;
+import com.yichenxbohan.mcnb.skill.skills.mage.DeathStare;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +42,7 @@ public final class SkillRegistry {
 
         switch (clazz) {
             case ARCHER -> registerArcherSkills(defs);
+            case MAGE -> registerMageSkills(defs);
             default -> registerGenericFiveSkills(defs, clazz);
         }
 
@@ -67,6 +69,18 @@ public final class SkillRegistry {
         String previousId = soulBow.getId();
         for (int i = 2; i <= 5; i++) {
             SkillDefinition generic = buildGenericSkill(PlayerClass.ARCHER, i, previousId);
+            register(defs, generic);
+            previousId = generic.getId();
+        }
+    }
+
+    private static void registerMageSkills(List<SkillDefinition> defs) {
+        SkillDefinition deathStare = DeathStare.createDefinition();
+        register(defs, deathStare);
+
+        String previousId = deathStare.getId();
+        for (int i = 2; i <= 5; i++) {
+            SkillDefinition generic = buildGenericSkill(PlayerClass.MAGE, i, previousId);
             register(defs, generic);
             previousId = generic.getId();
         }

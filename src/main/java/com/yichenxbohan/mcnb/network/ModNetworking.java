@@ -74,6 +74,12 @@ public class ModNetworking {
                 .encoder(ClassSelectPacket::toBytes)
                 .consumerMainThread(ClassSelectPacket::handle)
                 .add();
+        // 客戶端 -> 服務端：重置職業
+        INSTANCE.messageBuilder(ClassResetPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ClassResetPacket::new)
+                .encoder(ClassResetPacket::toBytes)
+                .consumerMainThread(ClassResetPacket::handle)
+                .add();
 
         // 服務端 -> 客戶端：同步職業
         INSTANCE.messageBuilder(ClassSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

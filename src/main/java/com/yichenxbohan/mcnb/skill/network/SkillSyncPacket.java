@@ -1,6 +1,7 @@
 package com.yichenxbohan.mcnb.skill.network;
 
 import com.yichenxbohan.mcnb.ModCapabilities;
+import com.yichenxbohan.mcnb.client.gui.SkillClassScreen; // 確保有導入你的技能畫面類別
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -66,14 +67,21 @@ public class SkillSyncPacket {
 
     @OnlyIn(Dist.CLIENT)
     private void handleClient() {
-        var player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        var player = mc.player;
         if (player == null) {
             return;
         }
+
+        // 1. 先把伺服器發送過來的最新數據更新進 Capability
         player.getCapability(ModCapabilities.PLAYER_SKILL).ifPresent(cap -> {
             cap.overwriteFrom(levels, cooldowns);
             cap.clearDirty();
         });
+
+        // 2. 數據同步完成後，檢查玩家當前是否正開著技能介面。如果是，立刻讓畫面重新整理
+        if (mc.screen instanceof SkillClassScreen skillScreen) {
+            skillScreen.refreshScreen();
+        }
     }
 }
-

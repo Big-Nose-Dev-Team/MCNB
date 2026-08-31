@@ -1,15 +1,14 @@
 package com.yichenxbohan.mcnb.items;
 
 import com.yichenxbohan.mcnb.Mcnb;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tiers;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import com.yichenxbohan.mcnb.items.stuff.*;
 
 public class ModItems {
 
@@ -35,6 +34,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> END_PORTAL_CORE_TEST_ITEM = ITEMS.register("end_portal_core_test_item",
             () -> new EndPortalCoreTestItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> PROFESSIONAL_REMASTERED_SCROLL = ITEMS.register("professional_remastered_scroll",
+            () -> new ProfessionalRemasteredScrollItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

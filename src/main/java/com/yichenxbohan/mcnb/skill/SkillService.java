@@ -9,7 +9,6 @@ import com.yichenxbohan.mcnb.skill.api.SkillAimType;
 import com.yichenxbohan.mcnb.skill.api.SkillCategory;
 import com.yichenxbohan.mcnb.skill.api.SkillDefinition;
 import com.yichenxbohan.mcnb.skill.api.SkillExecutionContext;
-import com.yichenxbohan.mcnb.skill.api.SkillPrerequisite;
 import com.yichenxbohan.mcnb.skill.api.SkillRegistry;
 import com.yichenxbohan.mcnb.skill.capability.IPlayerSkillData;
 import com.yichenxbohan.mcnb.skill.network.SkillSyncPacket;
@@ -59,9 +58,8 @@ public final class SkillService {
             if (current >= def.getMaxLevel()) {
                 return false;
             }
-            if (!checkPrerequisites(skillData, def.getPrerequisites())) {
-                return false;
-            }
+
+            // 【已移除】刪除了 checkPrerequisites 的攔截判定，允許繞過前置技能直接升級
 
             int playerLevel = player.getCapability(ModCapabilities.PLAYER_LEVEL).map(c -> c.getLevel()).orElse(1);
             if (skillData.getAvailableSkillPoints(playerLevel) <= 0) {
@@ -139,14 +137,7 @@ public final class SkillService {
         }).orElse(false);
     }
 
-    private static boolean checkPrerequisites(IPlayerSkillData skillData, List<SkillPrerequisite> prerequisites) {
-        for (SkillPrerequisite prerequisite : prerequisites) {
-            if (skillData.getSkillLevel(prerequisite.getRequiredSkillId()) < prerequisite.getMinLevel()) {
-                return false;
-            }
-        }
-        return true;
-    }
+    // 【已移除】刪除了未使用的 checkPrerequisites 私有方法，保持檔案乾淨
 
     private static Vec3 findTargetPosition(ServerPlayer player, SkillAimType aimType) {
         if (aimType == SkillAimType.SELF) {
@@ -213,4 +204,3 @@ public final class SkillService {
         });
     }
 }
-
